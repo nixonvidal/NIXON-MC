@@ -168,12 +168,12 @@ install_paketes() {
 clear && clear
   msg -bar
   clear && clear
-#install_paketes
+install_paketes
 mkdir /etc/VPS-MX 
 
 cd /etc/VPS-MX
 wget https://github.com/nixonvidal/NIXON-MC/raw/master/VPS-MX.zip
-unzip -xf VPS-MX.zip 
+unzip VPS-MX.zip 
 chmod +x VPS-MX.zip 
 rm -rf VPS-MX.zip
 cd
