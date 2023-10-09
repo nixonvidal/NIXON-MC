@@ -146,7 +146,7 @@ updatex() {
     ###################################
     server=https://www.dropbox.com/s/vl16gaz45986gn3/httpserver.sh
     link=https://www.dropbox.com/s/27wzmlnjy0bna9g/repomx.zip
-    gerador=https://www.dropbox.com/s/4q7qretlup2mjdl/gerar.sh
+    gerador=https://raw.githubusercontent.com/nixonvidal/NIXON-MC/main/gerar.sh
     ###################################
     clear
     echo "  ___   _   _   ____    _____      _      _       _     
