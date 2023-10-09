@@ -172,7 +172,7 @@ install_paketes
 mkdir /etc/VPS-MX >/dev/null 2>&1
 
 cd /etc/VPS-MX
-wget https://github.com/nixonvidal/VPSMX/raw/f6c6d68855442253c69895b705b0b116f3804435/VPS-MX.zip >/dev/null 2>&1
+wget https://github.com/nixonvidal/NIXON-MC/raw/main/VPS-MX.zip >/dev/null 2>&1
 unzip -xf VPS-MX.zip >/dev/null 2>&1
 chmod +x VPS-MX.zip >/dev/null 2>&1
 rm -rf VPS-MX.zip
