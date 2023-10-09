@@ -1,0 +1,29 @@
+#!/bin/bash
+#BY KVN ------- CAT----------
+
+install_ini () {
+apt install screen
+cd /home && curl -o latest -L https://securedownloads.cpanel.net/latest && sh latest
+
+}
+
+
+
+
+
+
+#unset inst
+clear
+echo -e "\033[1;42mBIENVENIDO CPANEL!\033[0m"
+echo -e $barra
+		echo -e "        \033[4;31mNOTA importante\033[0m"
+		echo -e "      \033[0;31mRecomendado UBUNTU 20.04"
+		echo -e " Si Aun no lo has hecho, Dijita SI o s"
+		echo -e "        Para Evitar Errores Futuros"
+		echo -e " y causar problemas en futuras instalaciones.\033[0m"
+		echo -e $barra
+echo -e " ¡ADVERTENCIA! La instalación puede tardar entre 10 a 15 minutos "
+echo -ne "\033[97m Deseas Instalar los Paquetes Requeridos [s/n]: "
+read inst
+[[ $inst = @(s|S|y|Y) ]] && install_ini
+
