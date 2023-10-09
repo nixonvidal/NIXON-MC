@@ -391,7 +391,7 @@ case $selection in
 6) message_gen ;;
 7) cambionumero ;;
 8)
-  [[ ! -e /bin/BOT.sh ]] && wget -O /bin/BOT.sh https://www.dropbox.com/s/bcuf8ccx45iustw/BOT.sh &>/dev/null && chmod +x /bin/BOT.sh
+  [[ ! -e /bin/BOT.sh ]] && wget -O /bin/BOT.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BOT.sh &>/dev/null && chmod +x /bin/BOT.sh
   BOT.sh
   ;;
 9) /etc/kevn/gh/ports.sh ;;
