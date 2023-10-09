@@ -390,7 +390,8 @@ ssh_reply() {
         # Se instala script en la VPS
 	curl -s -X POST $URL -d chat_id=$ID -d text="⏱️ COMENZANDO A INSTALAR SCRIPT..." &>/dev/null
         sshpass -p "$pass" ssh $user@$ip << EOF
-        wget https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/Install-Sin-Key.sh; ./Install-Sin-Key.sh
+	wget https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
+        rm -rf Install-Sin-Key.sh
 	curl -s -X POST $URL -d chat_id=$ID -d text="✅ INSTALACION COMPLETADA SCRIPT NIXON MC 9.9 ✅" &>/dev/null
 EOF
     else
