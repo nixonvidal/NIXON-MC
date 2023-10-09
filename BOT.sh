@@ -351,7 +351,7 @@ clear
     ram2=$(free -h | grep -i mem | awk {'print $4'})
     ram3=$(free -h | grep -i mem | awk {'print $3'})
     echo -e "$bar"
-    echo -e "	\e[1;36m༆ \e[1;33m  SCRIPT-BOT  \e[1;36m༆  \e[0m"
+    echo -e "	\e[1;36m༆ \e[1;33m  SCRIPT-BOT NEW  \e[1;36m༆  \e[0m"
     echo -e "  \e[1;37m COMANDO: vpsbot \e[31m|| \e[1;34mKEY INSTALADAS: \e[1;33m$(cat ${IVAR})"
     echo -e "\e[1;36m      APACHE: \e[1;32m $apache     \e[1;36mKEYGEN: \e[1;32m$BOK"
     echo -e "   \e[1;93m$systema \e[97mRam: \e[92m$ram1 \e[97mLibre: \e[92m$ram2 \e[97mUsado: \e[92m$ram3 "
