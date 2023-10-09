@@ -47,7 +47,6 @@ fun_bar() {
   sleep 1s
 }
 install_paketes() {
-  clear && clear
   ### PAQUETES PRINCIPALES
   msg -bar2
   msg -ama "  [ SCRIPT-FREE  \033[1;97m ❌ MOD By NEAR ❌\033[1;33m ]"
@@ -165,9 +164,6 @@ install_paketes() {
   echo -e "\033[97m    # apt-get install apache2......... $ESTATUS "
 
 }
-clear && clear
-  msg -bar
-  clear && clear
 install_paketes
 mkdir /etc/VPS-MX 
 
