@@ -304,7 +304,7 @@ cambionumero() {
 #-------------------BOTGEN--------------------#
 #bot_menu () {
 #CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
-#[[ ! -e "${CIDdir}/BOT.sh" ]] && wget -O ${CIDdir}/BOT.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/main/BotGen.sh &> /dev/null && chmod +x ${CIDdir}/BOT.sh
+#[[ ! -e "${CIDdir}/BOT.sh" ]] && wget -O ${CIDdir}/BOT.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BotGen.sh &> /dev/null && chmod +x ${CIDdir}/BOT.sh
 #sed -i -e 's/\r$//' ${CIDdir}/BOT.sh
 #source ${CIDdir}/BOT.sh
 #bot_gen
