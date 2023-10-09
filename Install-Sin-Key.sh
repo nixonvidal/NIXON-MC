@@ -168,7 +168,7 @@ install_paketes() {
 clear && clear
   msg -bar
   clear && clear
-install_paketes
+#install_paketes
 mkdir /etc/VPS-MX 
 
 cd /etc/VPS-MX
