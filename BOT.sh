@@ -182,7 +182,7 @@ sleep 2s
 
 echo "menu message.txt usercodes C-SSR.sh squid.sh squid.sh dropbear.sh proxy.sh openvpn.sh ssl.sh python.py shadowsocks.sh Shadowsocks-libev.sh Shadowsocks-R.sh v2ray.sh slowdns.sh budp.sh sockspy.sh PDirect.py PPub.py PPriv.py POpen.py PGet.py ADMbot.sh apacheon.sh tcp.sh fai2ban.sh blockBT.sh ultrahost speed.py squidpass.sh ID extras.sh"> /etc/newadm-instalacao
 
-wget -O /etc/ADM-db/BotGen.sh https://www.dropbox.com/s/b5smvgxkymx8e76/BotGen.sh &>/dev/null
+wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BotGen.sh &>/dev/null
 chmod +x ${CIDdir}/BotGen.sh
 echo " DESCARGA FINALIZADA"
 read -p "enter"
@@ -394,7 +394,7 @@ clear
 sleep 1
 echo -e " ACTUALIZANDO BOT KEYGEN"
 sleep 1
-wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/VPSCAT/VPSMX/master/BotGen.sh &>/dev/null
+wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BotGen.sh &>/dev/null
 chmod +x ${CIDdir}/BotGen.sh
 wget -O /bin/vpsbot https://raw.githubusercontent.com/VPSCAT/VPSMX/master/BOT.sh &>/dev/null && chmod +x /bin/vpsbot
 sleep 2
