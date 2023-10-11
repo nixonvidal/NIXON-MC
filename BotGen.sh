@@ -46,6 +46,7 @@ reply() {
 	[[ "${callback_query_data}" = /del || "${message_text}" = /del ]] && listID_src
 	[[ "${callback_query_data}" = /rell || "${message_text}" = /rell ]] && catrell
 	[[ "${callback_query_data}" = /ssh || "${message_text}" = /ssh ]] && ssh_mensaje
+	[[ "${callback_query_data}" = /pass || "${message_text}" = /pass ]] && pass_mensaje
 }
 
 # verificacion primarias
@@ -390,6 +391,32 @@ EOF
 	fi
 }
 
+pass_reply() {
+	# Dirección IP o nombre de host de la VPS remota
+	remote_host=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+	# Nombre de usuario en la VPS remota
+	remote_username=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+	# Nueva contraseña que quieres establecer
+	new_password=$(echo "${message_text[$id]}" | cut -d'|' -f3)
+	new_password_2=$(echo "${message_text[$id]}" | cut -d'|' -f4)
+	TOKEN="${bot_token}"
+	ID="${chatuser}"
+	URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+	# Utilizar SSH para cambiar la contraseña en la VPS remota
+	sshpass -p "$new_password" ssh "$remote_username@$remote_host" "echo -e \"$new_password\n$new_password_2\" | passwd"
+	
+	# Verificar si el cambio de contraseña fue exitoso
+	curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
+	if [ $? -eq 0 ]; then
+		sleep 2
+		curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
+		sleep 1
+		curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password}" &>/dev/null
+	else
+		curl -s -X POST $URL -d chat_id=$ID -d text="ERROR -> conectar VPS ❌" &>/dev/null
+	fi
+}
+
 rell_reply() {
 	[[ $(cat ${USRdatabase2} | grep "${message_text[$id]}") = "" ]] && {
 		echo "${message_text[$id]}" >${USRdatabase2}/Mensaje_$chatuser.txt
@@ -425,6 +452,14 @@ ssh_mensaje() {
 	bot_retorno+="$LINE\n"
 	msj_fun
 }
+pass_mensaje() {
+	local bot_retorno="$LINE\n"
+	bot_retorno+="💜 Herramienta New\n"
+	bot_retorno+="🌍 INGRESE -> IP|USUARIO|PASSWORD|NEW-PASS\n"
+	bot_retorno+="$LINE\n"
+	msj_fun
+}
+
 link_src() {
 	bot_retorno="$LINE\n"
 	bot_retorno+="SCRIPT VPS-MX 8.4\n"
@@ -597,6 +632,8 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECT
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🔑 KEYGEN' --callback_data '/keygen'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pas'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
@@ -632,6 +669,7 @@ while true; do
 					case ${message_reply_to_message_text[$id]} in
 					'/rell') rell_reply ;;
 					'/ssh') ssh_reply ;;
+					'/pass') pass_reply ;;
 					*) invalido_fun ;;
 					esac
 
@@ -644,6 +682,7 @@ while true; do
 					/[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
 					/[Rr]ell) reply & ;;
 					/[Ss]sh) reply & ;;
+					/[Pp]ass) reply & ;;
 					/[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
 						# /[Cc]ambiar)creditos &;;
 					/* | *) invalido_fun & ;;
@@ -659,6 +698,7 @@ while true; do
 				'/add') addID_reply ;;
 				'/rell') rell_reply ;;
 				'/ssh') ssh_reply ;;
+				'/pass') pass_reply ;;
 				*) invalido_fun ;;
 				esac
 
@@ -673,6 +713,7 @@ while true; do
 				/[Ii]d | /[Ii]D) myid_src & ;;
 				/[Aa]dd | /[Dd]el | /[Rr]ell) reply & ;;
 				/[Ss]sh) reply & ;;
+				/[Pp]ass) reply & ;;
 				/[Pp]ower) start_gen & ;;
 				/[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
 				/[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
