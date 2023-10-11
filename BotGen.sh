@@ -411,7 +411,7 @@ pass_reply() {
 		sleep 2
 		curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
 		sleep 1
-		curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password}" &>/dev/null
+		curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password_2}" &>/dev/null
 	else
 		curl -s -X POST $URL -d chat_id=$ID -d text="ERROR -> conectar VPS ❌" &>/dev/null
 	fi
