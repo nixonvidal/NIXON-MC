@@ -393,28 +393,32 @@ EOF
 
 pass_reply() {
 	# Dirección IP o nombre de host de la VPS remota
-	remote_host=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+	ip=$(echo "${message_text[$id]}" | cut -d'|' -f1)
 	# Nombre de usuario en la VPS remota
-	remote_username=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+	user=$(echo "${message_text[$id]}" | cut -d'|' -f2)
 	# Nueva contraseña que quieres establecer
-	new_password=$(echo "${message_text[$id]}" | cut -d'|' -f3)
-	new_password_2=$(echo "${message_text[$id]}" | cut -d'|' -f4)
+	pass=$(echo "${message_text[$id]}" | cut -d'|' -f3)
+	new_password=$(echo "${message_text[$id]}" | cut -d'|' -f4)
 	TOKEN="${bot_token}"
 	ID="${chatuser}"
 	URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 	# Utilizar SSH para cambiar la contraseña en la VPS remota
-	sshpass -p "$new_password" ssh "$remote_username@$remote_host" "echo -e \"$new_password\n$new_password_2\" | passwd"
-	
-	# Verificar si el cambio de contraseña fue exitoso
-	curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
-	if [ $? -eq 0 ]; then
-		sleep 2
-		curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
-		sleep 1
-		curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password_2}" &>/dev/null
+        if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
+		curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
+                if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip "echo -e \"$new_password\n$new_password\" | passwd"; then
+                   sleep 2
+		   curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
+		   sleep 1
+		   curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password}" &>/dev/null
+                else
+		    curl -s -X POST $URL -d chat_id=$ID -d text="Contraseña muy simple vuelve a intentarlo.. ❌" &>/dev/null
+                fi
 	else
 		curl -s -X POST $URL -d chat_id=$ID -d text="ERROR -> conectar VPS ❌" &>/dev/null
 	fi
+
+	
+ 
 }
 
 rell_reply() {
