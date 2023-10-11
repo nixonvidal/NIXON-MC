@@ -403,22 +403,20 @@ pass_reply() {
 	ID="${chatuser}"
 	URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 	# Utilizar SSH para cambiar la contraseña en la VPS remota
-        if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
+	if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
 		curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
-                if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip "echo -e \"$new_password\n$new_password\" | passwd"; then
-                   sleep 2
-		   curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
-		   sleep 1
-		   curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password}" &>/dev/null
-                else
-		    curl -s -X POST $URL -d chat_id=$ID -d text="Contraseña muy simple vuelve a intentarlo.. ❌" &>/dev/null
-                fi
+		if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip "echo -e \"$new_password\n$new_password\" | passwd"; then
+			sleep 2
+			curl -s -X POST $URL -d chat_id=$ID -d text="Cambiaste correctamente la contraseña ✅" &>/dev/null
+			sleep 1
+			curl -s -X POST $URL -d chat_id=$ID -d text="New Password: ${new_password}" &>/dev/null
+		else
+			curl -s -X POST $URL -d chat_id=$ID -d text="Contraseña muy simple vuelve a intentarlo.. ❌" &>/dev/null
+		fi
 	else
 		curl -s -X POST $URL -d chat_id=$ID -d text="ERROR -> conectar VPS ❌" &>/dev/null
 	fi
 
-	
- 
 }
 
 rell_reply() {
@@ -635,9 +633,12 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '♻️AGREG
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
-ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🔑 KEYGEN' --callback_data '/keygen'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pas'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
+
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
