@@ -634,7 +634,7 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECT
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN' --callback_data '/keygen'
-ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pas'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
