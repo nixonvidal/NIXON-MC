@@ -422,6 +422,7 @@ pass_reply() {
 descargar_apk(){
 	TOKEN="${bot_token}"
 	ID="${chatuser}"
+ 	URL="https://api.telegram.org/bot$TOKEN/sendMessage"
  	curl -s -X POST $URL -d chat_id=$ID -d text="Descargando APK Nikobhyn-Tools..✅" &>/dev/null
     wget "https://github.com/nixonvidal/NIXON-MC/raw/master/Nikobhyn%20Tools.apk" -O Nikobhyn-Tools.apk
     # Descargar el archivo
