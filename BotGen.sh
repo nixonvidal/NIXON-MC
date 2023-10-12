@@ -419,6 +419,22 @@ pass_reply() {
 
 }
 
+descargar_apk(){
+	TOKEN="${bot_token}"
+	ID="${chatuser}"
+    wget "https://github.com/nixonvidal/NIXON-MC/raw/master/Nikobhyn%20Tools.apk" -O Nikobhyn-Tools.apk
+    # Descargar el archivo
+    FILE_URL="Nikobhyn-Tools.apk"
+    FILE_NAME=$(basename "$FILE_URL")
+    curl -o "$FILE_NAME" "$FILE_URL"
+
+    # Enviar el archivo
+    curl -F chat_id="$ID" -F document=@"$FILE_NAME" "https://api.telegram.org/bot$TOKEN/sendDocument"
+
+    # Eliminar el archivo después de enviarlo (opcional)
+    rm "$FILE_NAME"
+}
+
 rell_reply() {
 	[[ $(cat ${USRdatabase2} | grep "${message_text[$id]}") = "" ]] && {
 		echo "${message_text[$id]}" >${USRdatabase2}/Mensaje_$chatuser.txt
@@ -636,8 +652,8 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
-ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '⬇️DESCARGAR APP⬇️' --callback_data '1' --url 'https://download1322.mediafire.com/tsken68igiggwGD42WRze0nWE6VIJWu4iccRGe4sfJDCBKA7gA5Y5s59P99qydHtfqNPCLNt7X1dpcbVtFzaos9v1HhiOWyBdRHf5swQvoZOFCGjJjLFiI1WZVnH8migS1cC4yb8p76H8Ll5I-1PKqED7u8QHuX56lttjtn11Kcq4g/nke2rdzimgsylb1/Nikobhyn+Tools.apk'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR APP⬇️' --callback_data '/descargar' 
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '⬇️DESCARGAR APP⬇️' --callback_data '/descargar'
 
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '👤 CONECTAR SSH' --callback_data '/ssh'
@@ -688,6 +704,7 @@ while true; do
 					/[Rr]ell) reply & ;;
 					/[Ss]sh) reply & ;;
 					/[Pp]ass) reply & ;;
+    					/[Dd]escargar) descargar_apk & ;;
 					/[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
 						# /[Cc]ambiar)creditos &;;
 					/* | *) invalido_fun & ;;
@@ -720,6 +737,7 @@ while true; do
 				/[Ss]sh) reply & ;;
 				/[Pp]ass) reply & ;;
 				/[Pp]ower) start_gen & ;;
+    				/[Dd]escargar) descargar_apk & ;;
 				/[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
 				/[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
 					#
