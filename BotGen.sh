@@ -497,7 +497,7 @@ aws_reply() {
     ID="${chatuser}"
     URL="https://api.telegram.org/bot$TOKEN/sendMessage"
     if es_ip_valida "$ip"; then
-        curl -s -X POST $URL -d chat_id=$ID -d text="VERIFICANDO ✅ | ESTO PUEDE TARDAR 🛠️" &>/dev/null
+        curl -s -X POST $URL -d chat_id=$ID -d text="🛠️SI LOS DATOS NO SON CORRECTOS NO INICIARA LA CONFIGURACION🛠️" &>/dev/null
         if ssh -i "$pem" $user@$ip true; then
             curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
             sleep 2
@@ -509,7 +509,7 @@ aws_reply() {
             curl -s -X POST $URL -d chat_id=$ID -d text="CONTRASEÑA: $pass" &>/dev/null
         else
             curl -s -X POST $URL -d chat_id=$ID -d text="ERROR -> conectar VPS ❌" &>/dev/null
-        fi
+        fi &
     else
         curl -s -X POST $URL -d chat_id=$ID -d text="IP INVALIDO ❌" &>/dev/null
     fi
