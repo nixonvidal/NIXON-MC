@@ -468,10 +468,10 @@ pem_reply() {
     # Genera la cadena aleatoria y la imprime
     cadena=$(head /dev/urandom | tr -dc "$caracteres" | head -c "$longitud")
     #echo "Cadena aleatoria: $cadena_aleatoria"
-    echo "$key" >key_$cadena.pem
-    awk -i inplace '{gsub(/\\n/, "\n"); print}' key_$cadena.pem
+    echo "$key" > ${CIDdir}/key_$cadena.pem
+    awk -i inplace '{gsub(/\\n/, "\n"); print}' ${CIDdir}/key_$cadena.pem
     #echo key_$cadena.pem
-    chmod 400 key_$cadena.pem
+    chmod 400 ${CIDdir}/key_$cadena.pem
     ########################
     TOKEN="${bot_token}"
     ID="${chatuser}"
@@ -496,9 +496,10 @@ aws_reply() {
     TOKEN="${bot_token}"
     ID="${chatuser}"
     URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+    PRIVATE_KEY="${CIDdir}/$pem"
     if es_ip_valida "$ip"; then
         curl -s -X POST $URL -d chat_id=$ID -d text="🛠️SI LOS DATOS NO SON CORRECTOS NO INICIARA LA CONFIGURACION🛠️" &>/dev/null
-        if ssh -i "$pem" $user@$ip true; then
+        if ssh -i "$PRIVATE_KEY" $user@$ip true; then
             curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
             sleep 2
             curl -s -X POST $URL -d chat_id=$ID -d text="CONFIGURANDO VPS🛠️" &>/dev/null
