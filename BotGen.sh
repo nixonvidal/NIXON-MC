@@ -15,6 +15,7 @@ SCPT_DIR="/etc/alxg/gh"
 mkdir /etc/bot/creditos
 DIR="/etc/http-shell"
 LIST="CM-NOXIN"
+DIRTOOLS="/etc/ADM-db"
 CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
 SRC="${CIDdir}/sources" && [[ ! -d ${SRC} ]] && mkdir ${SRC}
 CID="${CIDdir}/User-ID" && [[ ! -e ${CID} ]] && echo >${CID}
@@ -468,10 +469,10 @@ pem_reply() {
     # Genera la cadena aleatoria y la imprime
     cadena=$(head /dev/urandom | tr -dc "$caracteres" | head -c "$longitud")
     #echo "Cadena aleatoria: $cadena_aleatoria"
-    echo "$key" > ${CIDdir}/key_$cadena.pem
-    awk -i inplace '{gsub(/\\n/, "\n"); print}' ${CIDdir}/key_$cadena.pem
+    echo "$key" > ${DIRTOOLS}/key_$cadena.pem
+    awk -i inplace '{gsub(/\\n/, "\n"); print}' ${DIRTOOLS}/key_$cadena.pem
     #echo key_$cadena.pem
-    chmod 400 ${CIDdir}/key_$cadena.pem
+    chmod 400 ${DIRTOOLS}/key_$cadena.pem
     ########################
     TOKEN="${bot_token}"
     ID="${chatuser}"
@@ -496,7 +497,7 @@ aws_reply() {
     TOKEN="${bot_token}"
     ID="${chatuser}"
     URL="https://api.telegram.org/bot$TOKEN/sendMessage"
-    PRIVATE_KEY="${CIDdir}/$pem"
+    PRIVATE_KEY="${DIRTOOLS}/$pem"
     if es_ip_valida "$ip"; then
         curl -s -X POST $URL -d chat_id=$ID -d text="🛠️SI LOS DATOS NO SON CORRECTOS NO INICIARA LA CONFIGURACION🛠️" &>/dev/null
         if ssh -i "$PRIVATE_KEY" $user@$ip true; then
