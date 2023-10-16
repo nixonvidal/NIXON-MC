@@ -169,7 +169,7 @@ selection=$(selection_fun 4)
 case $selection in
 0)exit;;
 1)install_toolscard;;
-2)ingresar_toolscard
+2)ingresar_toolscard;;
 3)desinstall_toolscard;;
 
 esac
@@ -184,7 +184,7 @@ on_fun 4)
 case $selection in
 0)exit;;
 1)install_toolscard;;
-2)ingresar_toolscard
+2)ingresar_toolscard;;
 3)desinstall_toolscard;;
 
 esac
