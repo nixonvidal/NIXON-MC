@@ -469,15 +469,15 @@ pem_reply() {
     # Genera la cadena aleatoria y la imprime
     cadena=$(head /dev/urandom | tr -dc "$caracteres" | head -c "$longitud")
     #echo "Cadena aleatoria: $cadena_aleatoria"
-    echo "$key" > ${DIRTOOLS}/key_$cadena.pem
-    awk -i inplace '{gsub(/\\n/, "\n"); print}' ${DIRTOOLS}/key_$cadena.pem
+    echo "$key" > ${DIRTOOLS}/key_${cadena}.pem
+    awk -i inplace '{gsub(/\\n/, "\n"); print}' ${DIRTOOLS}/key_${cadena}.pem
     #echo key_$cadena.pem
-    chmod 400 ${DIRTOOLS}/key_$cadena.pem
+    chmod 400 ${DIRTOOLS}/key_${cadena}.pem
     ########################
     TOKEN="${bot_token}"
     ID="${chatuser}"
     URL="https://api.telegram.org/bot$TOKEN/sendMessage"
-    curl -s -X POST $URL -d chat_id=$ID -d text="SU KEY ES: key_$cadena.pem ✅" &>/dev/null
+    curl -s -X POST $URL -d chat_id=$ID -d text="SU KEY ES: key_${cadena}.pem ✅" &>/dev/null
     bot_retorno="/aws (Ya puedes cambiar a root)\n"
 }
 function es_ip_valida() {
