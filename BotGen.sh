@@ -500,7 +500,7 @@ aws_reply() {
     PRIVATE_KEY="${DIRTOOLS}/$pem"
     if es_ip_valida "$ip"; then
         curl -s -X POST $URL -d chat_id=$ID -d text="🛠️SI LOS DATOS NO SON CORRECTOS NO INICIARA LA CONFIGURACION🛠️" &>/dev/null
-        if ssh -i "$PRIVATE_KEY" $user@$ip true; then
+        if ssh -o StrictHostKeyChecking=no -i "$PRIVATE_KEY" $user@$ip true; then
             curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
             sleep 2
             curl -s -X POST $URL -d chat_id=$ID -d text="CONFIGURANDO VPS🛠️" &>/dev/null
