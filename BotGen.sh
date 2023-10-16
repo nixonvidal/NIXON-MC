@@ -458,7 +458,7 @@ descargar_apk() {
 }
 
 herramientas() {
-    bot_retorno="-----[HERRAMIENTAS BY CAT]------\n"
+    bot_retorno="-----[HERRAMIENTAS VIP NIXON-MC]------\n"
     menu_tools
 }
 pem_reply() {
