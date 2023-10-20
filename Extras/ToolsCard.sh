@@ -119,7 +119,7 @@ read -p "enter"
 menu
 }
 
-ingresar_tools(){
+ingresar_toolscard(){
 clear
 msg -bar
 cd CC-GENPRO4
