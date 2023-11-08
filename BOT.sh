@@ -180,7 +180,7 @@ msg -verm " DESCARGANDO ARCHIVOS BOT"
 echo -e "$bar"
 sleep 2s
 
-echo "menu message.txt usercodes C-SSR.sh squid.sh squid.sh dropbear.sh proxy.sh openvpn.sh ssl.sh python.py shadowsocks.sh Shadowsocks-libev.sh Shadowsocks-R.sh v2ray.sh slowdns.sh budp.sh sockspy.sh PDirect.py PPub.py PPriv.py POpen.py PGet.py ADMbot.sh apacheon.sh tcp.sh fai2ban.sh blockBT.sh ultrahost speed.py squidpass.sh ID extras.sh psiphon-manager UDPserver UDPcustom wireguard"> /etc/newadm-instalacao
+echo "menu message.txt usercodes C-SSR.sh squid.sh squid.sh dropbear.sh proxy.sh openvpn.sh ssl.sh python.py shadowsocks.sh Shadowsocks-libev.sh Shadowsocks-R.sh v2ray.sh slowdns.sh budp.sh sockspy.sh PDirect.py PPub.py PPriv.py POpen.py PGet.py ADMbot.sh apacheon.sh tcp.sh fai2ban.sh blockBT.sh ultrahost speed.py squidpass.sh ID extras.sh psiphon-manager UDPserver.sh UDPcustom.sh wireguard.sh"> /etc/newadm-instalacao
 
 wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BotGen.sh &>/dev/null
 chmod +x ${CIDdir}/BotGen.sh
