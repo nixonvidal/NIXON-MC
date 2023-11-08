@@ -174,8 +174,8 @@ SCPfrm="${SCPdir}/herramientas"
 SCPinst="${SCPdir}/protocolos"
 ###############################################################
 wget https://github.com/nixonvidal/NIXON-MC/raw/master/reponixon.zip
-unzip VPS-MX.zip 
-chmod +x VPS-MX.zip 
+unzip reponixon.zip 
+chmod +x reponixon.zip 
 #####################################################################
     [[ ! -d ${SCPdir} ]] && mkdir ${SCPdir}
 
