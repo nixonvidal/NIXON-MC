@@ -186,69 +186,46 @@ mkdir /etc/VPS-MX/v2ray
     [[ ! -d ${SCPfrm} ]] && mkdir ${SCPfrm}
 
     [[ ! -d ${SCPinst} ]] && mkdir ${SCPinst}
+    
+mv -f "/NIXON/menu" "${SCPdir}/"
+mv -f "/NIXON/message.txt" "${SCPdir}/"
+mv -f "/NIXON/ID" "${SCPdir}/"
+mv -f "/NIXON/usercodes" "${SCPusr}/"
+mv -f "/NIXON/ADMbot.sh" "${SCPfrm}/"
+mv -f "/NIXON/apacheon.sh" "${SCPfrm}/"
+mv -f "/NIXON/tcp.sh" "${SCPfrm}/"
+mv -f "/NIXON/fai2ban.sh" "${SCPfrm}/"
+mv -f "/NIXON/blockBT.sh" "${SCPfrm}/"
+mv -f "/NIXON/ultrahost" "${SCPfrm}/"
+mv -f "/NIXON/speed.py" "${SCPfrm}/"
+mv -f "/NIXON/squidpass.sh" "${SCPfrm}/"
+mv -f "/NIXON/C-SSR.sh" "${SCPinst}/"
+mv -f "/NIXON/extras.sh" "${SCPinst}/"
+mv -f "/NIXON/UDPcustom.sh" "${SCPinst}/"
+mv -f "/NIXON/UDPserver.sh" "${SCPinst}/"
+mv -f "/NIXON/wireguard.sh" "${SCPinst}/"
+mv -f "/NIXON/psiphon-manage" "${SCPinst}/"
+mv -f "/NIXON/openssh.sh" "${SCPinst}/"
+mv -f "/NIXON/squid.sh" "${SCPinst}/"
+mv -f "/NIXON/dropbear.sh" "${SCPinst}/"
+mv -f "/NIXON/proxy.sh" "${SCPinst}/"
+mv -f "/NIXON/openvpn.sh" "${SCPinst}/"
+mv -f "/NIXON/ssl.sh" "${SCPinst}/"
+mv -f "/NIXON/python.py" "${SCPinst}/"
+mv -f "/NIXON/shadowsocks.sh" "${SCPinst}/"
+mv -f "/NIXON/Shadowsocks-libev.sh" "${SCPinst}/"
+mv -f "/NIXON/Shadowsocks-R.sh" "${SCPinst}/"
+mv -f "/NIXON/v2ray.sh" "${SCPinst}/"
+mv -f "/NIXON/slowdns.sh" "${SCPinst}/"
+mv -f "/NIXON/budp.sh" "${SCPinst}/"
+mv -f "/NIXON/sockspy.sh" "${SCPinst}/"
+mv -f "/NIXON/PDirect.py" "${SCPinst}/"
+mv -f "/NIXON/PPub.py" "${SCPinst}/"
+mv -f "/NIXON/PPriv.py" "${SCPinst}/"
+mv -f "/NIXON/POpen.py" "${SCPinst}/"
+mv -f "/NIXON/PGet.py" "${SCPinst}/"
+mv -f /NIXON/* "${SCPfrm}/"
 
-    case $1 in
-
-    "menu" | "message.txt" | "ID") ARQ="${SCPdir}/" ;; #Menu
-
-    "usercodes") ARQ="${SCPusr}/" ;; #Panel SSRR
-
-    "ADMbot.sh") ARQ="${SCPfrm}/" ;;
-
-    "apacheon.sh") ARQ="${SCPfrm}/" ;;
-
-    "tcp.sh") ARQ="${SCPfrm}/" ;;
-
-    "fai2ban.sh") ARQ="${SCPfrm}/" ;;
-
-    "blockBT.sh") ARQ="${SCPfrm}/" ;;
-
-    "ultrahost") ARQ="${SCPfrm}/" ;;
-
-    "speed.py") ARQ="${SCPfrm}/" ;;
-
-    "squidpass.sh") ARQ="${SCPfrm}/" ;;
-
-    "C-SSR.sh") ARQ="${SCPinst}/" ;; #Panel SSR
-
-    "extras.sh") ARQ="${SCPinst}/" ;; #Panel SSR
-
-    "UDPcustom.sh") ARQ="${SCPinst}/" ;; #Instalacao
-    "UDPserver.sh") ARQ="${SCPinst}/" ;; #Instalacao
-    "wireguard.sh") ARQ="${SCPinst}/" ;; #Instalacao
-    "psiphon-manage") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "openssh.sh") ARQ="${SCPinst}/" ;; #OpenVPN
-
-    "squid.sh") ARQ="${SCPinst}/" ;; #Squid
-
-    "dropbear.sh" | "proxy.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "proxy.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "openvpn.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "ssl.sh" | "python.py") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "shadowsocks.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "Shadowsocks-libev.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "Shadowsocks-R.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "v2ray.sh" | "slowdns.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "budp.sh") ARQ="${SCPinst}/" ;; #Instalacao
-
-    "sockspy.sh" | "PDirect.py" | "PPub.py" | "PPriv.py" | "POpen.py" | "PGet.py") ARQ="${SCPinst}/" ;; #Instalacao
-
-    *) ARQ="${SCPfrm}/" ;; #Herramientas
-
-    esac
-
-    mv -f ${SCPinstal}/$1 ${ARQ}/$1
-
-    chmod +x ${ARQ}/$1
 ################################################################
 rm -rf VPS-MX.zip
 cd
