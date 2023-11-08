@@ -755,6 +755,11 @@ mkdir /etc/VPS-MX/v2ray
 
     "extras.sh") ARQ="${SCPinst}/" ;; #Panel SSR
 
+    "UDPcustom.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "UDPserver.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "wireguard.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "psiphon-manage") ARQ="${SCPinst}/" ;; #Instalacao
+
     "openssh.sh") ARQ="${SCPinst}/" ;; #OpenVPN
 
     "squid.sh") ARQ="${SCPinst}/" ;; #Squid
