@@ -794,11 +794,11 @@ ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 4 --text '-> CA
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
 
 # ADMIN CONTROL USER
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 2 --text '🚮 ELIMINAR' --callback_data '/del'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 3 --text '👥 LISTA USER' --callback_data '/list'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 4 --text '🆔 ID' --callback_data '/ID'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 2 --text '🚮 ELIMINAR' --callback_data '/del'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 3 --text '👥 LISTA USER' --callback_data '/list'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 4 --text '🆔 ID' --callback_data '/ID'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 5 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
 #
 # Ejecutando escucha del bot
 while true; do
