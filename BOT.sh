@@ -167,20 +167,20 @@ echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Apache2"
 apt-get install apache2 -y &>/dev/null & spiner
 sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf
 service apache2 restart > /dev/null 2>&1 &
-repos=https://www.dropbox.com/s/27wzmlnjy0bna9g/repomx.zip
+repos=https://www.dropbox.com/s/27wzmlnjy0bna9g/reponixon.zip
 wget $repos &>/dev/null
-unzip repomx.zip &>/dev/null
-cp VPS-MX/* ${RC}/
+unzip reponixon.zip &>/dev/null
+cp NIXON/* ${RC}/
 chmod +x ${RC}/*
-rm -rf repomx.zip
-rm -rf VPS-MX
+rm -rf reponixon.zip
+rm -rf NIXON
 sleep 1s
 echo -e "$bar"
 msg -verm " DESCARGANDO ARCHIVOS BOT"
 echo -e "$bar"
 sleep 2s
 
-echo "menu message.txt usercodes C-SSR.sh squid.sh squid.sh dropbear.sh proxy.sh openvpn.sh ssl.sh python.py shadowsocks.sh Shadowsocks-libev.sh Shadowsocks-R.sh v2ray.sh slowdns.sh budp.sh sockspy.sh PDirect.py PPub.py PPriv.py POpen.py PGet.py ADMbot.sh apacheon.sh tcp.sh fai2ban.sh blockBT.sh ultrahost speed.py squidpass.sh ID extras.sh"> /etc/newadm-instalacao
+echo "menu message.txt usercodes C-SSR.sh squid.sh squid.sh dropbear.sh proxy.sh openvpn.sh ssl.sh python.py shadowsocks.sh Shadowsocks-libev.sh Shadowsocks-R.sh v2ray.sh slowdns.sh budp.sh sockspy.sh PDirect.py PPub.py PPriv.py POpen.py PGet.py ADMbot.sh apacheon.sh tcp.sh fai2ban.sh blockBT.sh ultrahost speed.py squidpass.sh ID extras.sh psiphon-manager UDPserver UDPcustom wireguard"> /etc/newadm-instalacao
 
 wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BotGen.sh &>/dev/null
 chmod +x ${CIDdir}/BotGen.sh
