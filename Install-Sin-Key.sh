@@ -166,11 +166,90 @@ install_paketes() {
 }
 install_paketes
 mkdir /etc/VPS-MX 
-
-cd /etc/VPS-MX
-wget https://github.com/nixonvidal/NIXON-MC/raw/master/VPS-MX.zip
+SCPdir="/etc/VPS-MX"
+SCPinstal="$HOME/install"
+SCPidioma="${SCPdir}/idioma"
+SCPusr="${SCPdir}/controlador"
+SCPfrm="${SCPdir}/herramientas"
+SCPinst="${SCPdir}/protocolos"
+###############################################################
+wget https://github.com/nixonvidal/NIXON-MC/raw/master/reponixon.zip
 unzip VPS-MX.zip 
 chmod +x VPS-MX.zip 
+#####################################################################
+    [[ ! -d ${SCPdir} ]] && mkdir ${SCPdir}
+
+mkdir /etc/VPS-MX/v2ray
+
+    [[ ! -d ${SCPusr} ]] && mkdir ${SCPusr}
+
+    [[ ! -d ${SCPfrm} ]] && mkdir ${SCPfrm}
+
+    [[ ! -d ${SCPinst} ]] && mkdir ${SCPinst}
+
+    case $1 in
+
+    "menu" | "message.txt" | "ID") ARQ="${SCPdir}/" ;; #Menu
+
+    "usercodes") ARQ="${SCPusr}/" ;; #Panel SSRR
+
+    "ADMbot.sh") ARQ="${SCPfrm}/" ;;
+
+    "apacheon.sh") ARQ="${SCPfrm}/" ;;
+
+    "tcp.sh") ARQ="${SCPfrm}/" ;;
+
+    "fai2ban.sh") ARQ="${SCPfrm}/" ;;
+
+    "blockBT.sh") ARQ="${SCPfrm}/" ;;
+
+    "ultrahost") ARQ="${SCPfrm}/" ;;
+
+    "speed.py") ARQ="${SCPfrm}/" ;;
+
+    "squidpass.sh") ARQ="${SCPfrm}/" ;;
+
+    "C-SSR.sh") ARQ="${SCPinst}/" ;; #Panel SSR
+
+    "extras.sh") ARQ="${SCPinst}/" ;; #Panel SSR
+
+    "UDPcustom.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "UDPserver.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "wireguard.sh") ARQ="${SCPinst}/" ;; #Instalacao
+    "psiphon-manage") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "openssh.sh") ARQ="${SCPinst}/" ;; #OpenVPN
+
+    "squid.sh") ARQ="${SCPinst}/" ;; #Squid
+
+    "dropbear.sh" | "proxy.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "proxy.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "openvpn.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "ssl.sh" | "python.py") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "shadowsocks.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "Shadowsocks-libev.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "Shadowsocks-R.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "v2ray.sh" | "slowdns.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "budp.sh") ARQ="${SCPinst}/" ;; #Instalacao
+
+    "sockspy.sh" | "PDirect.py" | "PPub.py" | "PPriv.py" | "POpen.py" | "PGet.py") ARQ="${SCPinst}/" ;; #Instalacao
+
+    *) ARQ="${SCPfrm}/" ;; #Herramientas
+
+    esac
+
+    mv -f ${SCPinstal}/$1 ${ARQ}/$1
+
+    chmod +x ${ARQ}/$1
+################################################################
 rm -rf VPS-MX.zip
 cd
 chmod -R 755 /etc/VPS-MX
