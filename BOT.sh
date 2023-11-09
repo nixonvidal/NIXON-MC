@@ -167,7 +167,7 @@ echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Apache2"
 apt-get install apache2 -y &>/dev/null & spiner
 sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf
 service apache2 restart > /dev/null 2>&1 &
-repos=https://www.dropbox.com/s/27wzmlnjy0bna9g/reponixon.zip
+repos=https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/reponixon.zip
 wget $repos &>/dev/null
 unzip reponixon.zip &>/dev/null
 cp NIXON/* ${RC}/
