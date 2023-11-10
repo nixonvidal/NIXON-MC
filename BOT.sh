@@ -167,13 +167,13 @@ echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Apache2"
 apt-get install apache2 -y &>/dev/null & spiner
 sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf
 service apache2 restart > /dev/null 2>&1 &
-repos=https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/repomx.zip
+repos=https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/reponixon.zip
 wget $repos &>/dev/null
-unzip repomx.zip &>/dev/null
-cp VPS-MX/* ${RC}/
+unzip reponixon.zip &>/dev/null
+cp NIXON/* ${RC}/
 chmod +x ${RC}/*
-rm -rf repomx.zip
-rm -rf VPS-MX
+rm -rf reponixon.zip
+rm -rf NIXON
 sleep 1s
 echo -e "$bar"
 msg -verm " DESCARGANDO ARCHIVOS BOT"
