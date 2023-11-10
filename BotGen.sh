@@ -186,6 +186,23 @@ menu_tools() {
             --reply_markup "$(ShellBot.InlineKeyboardMarkup -b 'botao_tools_conf')"
     fi
 }
+menu_user() {
+    [[ ! -z ${callback_query_message_chat_id[$id]} ]] && var=${callback_query_message_chat_id[$id]} || var=${message_chat_id[$id]}
+
+    if [[ $(echo $permited | grep "${chatuser}") = "" ]]; then
+        # ShellBot.sendMessage 	--chat_id ${message_chat_id[$id]} \
+        ShellBot.sendMessage --chat_id $var \
+            --text "<i>$(echo -e $bot_retorno)</i>" \
+            --parse_mode html \
+            --reply_markup "$(ShellBot.InlineKeyboardMarkup -b 'botao_control_user')"
+    else
+        # ShellBot.sendMessage 	--chat_id ${message_chat_id[$id]} \
+        ShellBot.sendMessage --chat_id $var \
+            --text "<i>$(echo -e $bot_retorno)</i>" \
+            --parse_mode html \
+            --reply_markup "$(ShellBot.InlineKeyboardMarkup -b 'botao_control_conf')"
+    fi
+}
 
 download_file() {
     # shellbot.sh editado linea 3986
@@ -461,6 +478,10 @@ herramientas() {
     bot_retorno="-----[HERRAMIENTAS VIP NIXON-MC]------\n"
     menu_tools
 }
+usercontrol() {
+    bot_retorno="-----[CONTROLADOR]------\n"
+    menu_user
+}
 pem_reply() {
     key=$(echo "${message_text[$id]}" | cut -d'|' -f1)
     longitud=10
@@ -735,16 +756,16 @@ botao_user=''
 
 botao_tools_user=''
 botao_tools_conf=''
+
+botao_control_user=''
+botao_control_conf=''
 #botao_donar=''
 
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '🚮 ELIMINAR' --callback_data '/del'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '👥 LISTA USER' --callback_data '/list'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '🆔 ID' --callback_data '/ID'
 
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '👤 CONTROL USER' --callback_data '/user'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '❌ POWER ✅' --callback_data '/power'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MENU' --callback_data '/menu'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
+
 #ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
@@ -776,6 +797,11 @@ ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 4 --text '-> CA
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
 
 #
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 2 --text '🚮 ELIMINAR' --callback_data '/del'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 3 --text '👥 LISTA USER' --callback_data '/list'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 4 --text '🆔 ID' --callback_data '/ID'
+ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 5 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
 # Ejecutando escucha del bot
 while true; do
     ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30
@@ -864,6 +890,7 @@ while true; do
                 /[Pp]em) reply & ;;
                 /[Pp]ower) start_gen & ;;
                 /[Dd]escargar) descargar_apk & ;;
+                /[Uu]ser) usercontrol & ;;
                 /[Tt]ools) herramientas & ;;
                 /[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
                 /[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
