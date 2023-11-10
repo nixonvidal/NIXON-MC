@@ -1,5 +1,13 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
+botao_conf=''
+botao_user=''
+
+botao_tools_user=''
+botao_tools_conf=''
+
+botao_control_user=''
+botao_control_conf=''
 meu_ip_fun() {
     MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
     MIP2=$(wget -qO- ipv4.icanhazip.com)
@@ -490,7 +498,7 @@ pem_reply() {
     # Genera la cadena aleatoria y la imprime
     cadena=$(head /dev/urandom | tr -dc "$caracteres" | head -c "$longitud")
     #echo "Cadena aleatoria: $cadena_aleatoria"
-    echo "$key" > ${DIRTOOLS}/key_${cadena}.pem
+    echo "$key" >${DIRTOOLS}/key_${cadena}.pem
     awk -i inplace '{gsub(/\\n/, "\n"); print}' ${DIRTOOLS}/key_${cadena}.pem
     #echo key_$cadena.pem
     chmod 400 ${DIRTOOLS}/key_${cadena}.pem
@@ -660,7 +668,16 @@ menu_src() {
             bot_retorno+="/instalador (link de instalacion)\n"
             bot_retorno+="/gerar (Generar una key)\n"
             bot_retorno+="━━━━━━━━━━━━━━━━━\n"
+            if grep -q "${chatuser}|1" "${CID}"; then
+                ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN ✅' --callback_data '/keygen'
+                # Agrega aquí el código para el mensaje 1
+            elif grep -q "${chatuser}|0" "${CID}"; then
+                false
+            else
+                false
+            fi
             menu_print
+
         fi
 
     else
@@ -751,16 +768,7 @@ autori() {
     return 0
 }
 
-botao_conf=''
-botao_user=''
-
-botao_tools_user=''
-botao_tools_conf=''
-
-botao_control_user=''
-botao_control_conf=''
 #botao_donar=''
-
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '👤 CONTROL USER' --callback_data '/user'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '❌ POWER ✅' --callback_data '/power'
@@ -769,7 +777,7 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MEN
 #ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
-ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN' --callback_data '/keygen'
+
 #ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pass'
 #ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
 
@@ -841,22 +849,24 @@ while true; do
 
                 elif [[ ${message_text[$id]} || ${callback_query_data[$id]} ]]; then
                     case ${comando[0]} in
-                    /[Mm]enu | [Mm]enu | /[Ss]tart | [Ss]tart | [Cc]omensar | /[Cc]omensar) menu_src & ;;
-                        #
-                    /[Ii]d | /[Ii]D) myid_src & ;;
+                    /[Mm]enu | /[Ss]tart | /[Cc]omensar) menu_src & ;;
+                    /[Ii]d) myid_src & ;;
                     /[Ii]nstalador) link_src & ;;
                     /[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
-                    /[Rr]ell) reply & ;;
-                    /[Ss]sh) reply & ;;
-                    /[Pp]ass) reply & ;;
-                    /[Aa]ws) reply & ;;
-                    /[Pp]em) reply & ;;
+                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em) reply & ;;
                     /[Dd]escargar) descargar_apk & ;;
                     /[Tt]ools) herramientas & ;;
-                    /[Kk]eygen | /[Gg]erar | [Gg]erar | [Kk]eygen) gerar_key & ;;
-                        # /[Cc]ambiar)creditos &;;
-                    /* | *) invalido_fun & ;;
+                    /[Kk]eygen | /[Gg]erar)
+                        if grep -q "${chatuser}|1" "${CID}"; then
+                            gerar_key &
+                        else
+                            otra_accion &
+                        fi
+                        ;;
+                    # /[Cc]ambiar) creditos & ;;
+                    *) invalido_fun & ;;
                     esac
+
                 fi
 
             fi
