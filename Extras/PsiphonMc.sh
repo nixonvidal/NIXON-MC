@@ -51,11 +51,8 @@ mostrar_menu() {
     echo "3. Ver configuración"
     echo "4. Salir"
 }
-
-while true; do
     mostrar_menu
     read -p "Selecciona una opción (1-4): " opcion
-
     case $opcion in
     1) instalar_psiphond ;;
     2) desinstalar_psiphond ;;
@@ -68,4 +65,3 @@ while true; do
         echo "Opción inválida. Intenta de nuevo."
         ;;
     esac
-done
