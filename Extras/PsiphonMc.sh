@@ -1,7 +1,7 @@
 #!/bin/bash
 instalar_psiphond() {
     echo "Instalando PsiphonD..."
-    wget https://github.com/Psiphon-Labs/psiphon-tunnel-core-binaries/raw/master/psiphond/psiphond &
+    wget https://github.com/Psiphon-Labs/psiphon-tunnel-core-binaries/raw/master/psiphond/psiphond &>/dev/null
     chmod 777 psiphond
     ip=$(wget -qO- ifconfig.me)
     echo "————————————————————————————————————————————————————"
