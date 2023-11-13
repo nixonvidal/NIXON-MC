@@ -12,7 +12,6 @@ instalar_psiphond() {
     screen -dmS psiphon ./psiphond run
     echo "————————————————————————————————————————————————————"
     cat server-entry.dat
-    echo "\n————————————————————————————————————————————————————"
     echo "Puerto SSH: $puerto_ssh"
     echo "Puerto OSSH: $puerto_ossh"
     echo "Puerto FRONTED-MEEK-OSSH: $puerto_fronted"
