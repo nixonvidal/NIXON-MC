@@ -30,6 +30,8 @@ CID="${CIDdir}/User-ID" && [[ ! -e ${CID} ]] && echo >${CID}
 keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 [[ ! -d /etc/ADM-db/Creditos ]] && mkdir /etc/ADM-db/Creditos
 USRdatabase2="/etc/ADM-db/Creditos"/
+[[ ! -d /etc/ADM-db/fecha ]] && mkdir /etc/ADM-db/fecha
+USRdatabase3="/etc/ADM-db/fecha"/
 [[ $(dpkg --get-selections | grep -w "jq" | head -1) ]] || apt-get install jq -y &>/dev/null
 [[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://www.dropbox.com/s/gfwlkfq4f2kplze/ShellBot.sh &>/dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
@@ -387,8 +389,12 @@ deleteID_reply() {
 }
 
 addID_reply() {
+    id=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+    keygen=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+    fecha=$(echo "${message_text[$id]}" | cut -d'|' -f3)
     [[ $(cat ${CID} | grep "${message_text[$id]}") = "" ]] && {
         echo "/${message_text[$id]}" >>${CID}
+        echo "$fecha" >${USRdatabase3}/fecha_$id.txt
         bot_retorno="$LINE\n"
         bot_retorno+="✅ *ID agregado * ✅\n"
         bot_retorno+="$LINE\n"
