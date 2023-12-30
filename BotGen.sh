@@ -389,12 +389,12 @@ deleteID_reply() {
 }
 
 addID_reply() {
-    id=$(echo "${message_text[$id]}" | cut -d'|' -f1)
-    keygen=$(echo "${message_text[$id]}" | cut -d'|' -f2)
-    fecha=$(echo "${message_text[$id]}" | cut -d'|' -f3)
-    [[ $(cat ${CID} | grep "${message_text[$id]}") = "" ]] && {
+    iduser=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+    keygenuser=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+    fechauser=$(echo "${message_text[$id]}" | cut -d'|' -f3)
+    [[ $(cat ${CID} | grep "$iduser") = "" ]] && {
         echo "/${message_text[$id]}" >>${CID}
-        echo "$fecha" >${USRdatabase3}/fecha_$id.txt
+        echo "$fechauser" >${USRdatabase3}/fecha_$iduser.txt
         bot_retorno="$LINE\n"
         bot_retorno+="✅ *ID agregado * ✅\n"
         bot_retorno+="$LINE\n"
@@ -660,12 +660,35 @@ menu_src() {
             creditos="$(cat /etc/ADM-db/Creditos/Mensaje_$chatuser.txt)"
             [[ ! $creditos ]] && credi="NIXON MC" || credi="$creditos"
             #menú
+            fecha_limite=$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)
+            # Obtener la fecha actual en el mismo formato
+            fecha_actual=$(date +"%Y-%m-%d %H:%M:%S")
+            # Convertir fechas a segundos desde la Época (1970-01-01 00:00:00 UTC)
+            tiempo_actual=$(date -d "$fecha_actual" +%s)
+            tiempo_limite=$(date -d "$fecha_limite" +%s)
+            # Calcular el tiempo restante en segundos
+            dias=$((tiempo_restante / 86400))
+            horas=$(( (tiempo_restante % 86400) / 3600))
+            minutos=$(( (tiempo_restante % 3600) / 60 ))
+            segundos=$((tiempo_restante % 60))
+            tiempo_restante=$((tiempo_limite - tiempo_actual))
+            
             bot_retorno+="✨ BIENVENIDO ✨\n"
             bot_retorno+="📝NOTA: Hola @${message_from_username[$id]} Ya tenés acceso al bot dale click en el boton KEY-V8.4x Grasias Por preferírnos..\n"
             bot_retorno+="👤USUARIO: ${message_from_first_name[$id]} CON ACCESO✅\n"
             bot_retorno+="🆔TU ID: [${chatuser}] REGISTRADO✅\n"
             bot_retorno+="👤USER: @${message_from_username[$id]}\n"
             bot_retorno+="👑RESELLER: $credi\n"
+            if [[ $tiempo_restante -le 0 ]]; then
+                bot_retorno+="⌚ YA VENCIO ❌\n"
+            else
+                # Calcular días, horas, minutos y segundos
+                diasf=$((tiempo_restante / 86400))
+                horasf=$(( (tiempo_restante % 86400) / 3600))
+                minutosf=$(( (tiempo_restante % 3600) / 60 ))
+                segundosf=$((tiempo_restante % 60))
+                bot_retorno+="⌚Tiempo restante: ${diasf} D, ${horasf} H, ${minutosf} M, ${segundosf} S ✅\n"
+            fi
             bot_retorno+="Gen $PID_GEN | Keys Used [$k_used]\n"
             bot_retorno+="KEY 𝑮𝑬𝑵𝑬𝑹𝑨𝑫𝑨:  [  $(ls /etc/http-shell/ | grep name | wc -l) ]\n"
             bot_retorno+="🔧SOPORTE: @Tudark_b\n"
@@ -675,7 +698,9 @@ menu_src() {
             bot_retorno+="/gerar (Generar una key)\n"
             bot_retorno+="━━━━━━━━━━━━━━━━━\n"
             if grep -q "${chatuser}|1" "${CID}"; then
-                ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN ✅' --callback_data '/keygen'
+                if [ $tiempo_restante -gt 0 ]; then
+                    ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '🔑 KEYGEN ✅' --callback_data '/keygen' 
+                fi
                 # Agrega aquí el código para el mensaje 1
             elif grep -q "${chatuser}|0" "${CID}"; then
                 false
@@ -786,6 +811,7 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN
 
 #ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🌍New Pass' --callback_data '/pass'
 #ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🌍New Pass' --callback_data '/pass'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text 'MENU' --callback_data '/menu'
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
@@ -859,11 +885,29 @@ while true; do
                     /[Ii]d) myid_src & ;;
                     /[Ii]nstalador) link_src & ;;
                     /[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
-                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em) reply & ;;
-                    /[Dd]escargar) descargar_apk & ;;
-                    /[Tt]ools) herramientas & ;;
+                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em) 
+                     if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ]; then
+                            reply & 
+                        else
+                            otra_accion &
+                        fi
+                        ;;
+                    /[Dd]escargar)
+                        if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ]; then
+                            descargar_apk &
+                        else
+                            otra_accion &
+                        fi
+                        ;;
+                    /[Tt]ools)  
+                        if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ]; then
+                            herramientas &
+                        else
+                            otra_accion &
+                        fi
+                        ;;
                     /[Kk]eygen | /[Gg]erar)
-                        if grep -q "${chatuser}|1" "${CID}"; then
+                        if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ] && grep -q "${chatuser}|1" "${CID}"; then
                             gerar_key &
                         else
                             otra_accion &
