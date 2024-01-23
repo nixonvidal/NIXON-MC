@@ -163,6 +163,8 @@ echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Bc"
 apt-get install bc -y >/dev/null 2>&1 & spiner
 echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Netcat"
 apt-get install netcat -y >/dev/null 2>&1 & spiner
+echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Jq"
+apt-get install jq -y >/dev/null 2>&1 & spiner
 echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Apache2"
 apt-get install apache2 -y &>/dev/null & spiner
 sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf
