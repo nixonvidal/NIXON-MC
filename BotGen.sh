@@ -60,7 +60,7 @@ reply() {
     [[ "${callback_query_data}" = /pass || "${message_text}" = /pass ]] && pass_mensaje
     [[ "${callback_query_data}" = /aws || "${message_text}" = /aws ]] && aws_mensaje
     [[ "${callback_query_data}" = /pem || "${message_text}" = /pem ]] && pem_mensaje
-    [[ "${callback_query_data}" = /numero || "${message_text}" = /pem ]] && numero_mensaje
+    [[ "${callback_query_data}" = /numero || "${message_text}" = /numero ]] && numero_mensaje
 }
 
 # verificacion primarias
@@ -473,7 +473,6 @@ pass_reply() {
 numero_reply{
     numero=$(echo "${message_text[$id]}" | cut -d'|' -f1)
     url="https://keydark.000webhostapp.com/api.php?numero=$numero"
-
     responseAPI=$(curl -s "$url")
     nombre=$(echo "$responseAPI" | jq -r '.nombre')
     dni=$(echo "$responseAPI" | jq -r '.dni')
@@ -973,6 +972,7 @@ while true; do
                 '/pass') pass_reply ;;
                 '/aws') aws_reply ;;
                 '/pem') pem_reply ;;
+		'/numero') numero_reply ;;
                 *) invalido_fun ;;
                 esac
 
