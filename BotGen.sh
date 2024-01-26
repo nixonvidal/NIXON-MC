@@ -531,7 +531,7 @@ numero_reply() {
     ubicacion=$(echo "$responseAPI" | jq -r '.ubicacion')
     direccion=$(echo "$responseAPI" | jq -r '.direccion')
     Ubigeo_Nacimiento=$(echo "$responseAPI" | jq -r '.Ubigeo_Nacimiento')
-    bot_retorno+="$LINE"
+    bot_retorno+="$LINE\n"
     bot_retorno+="Nombre: ${nombre}\n"
     bot_retorno+="DNI: ${dni}\n"
     bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
@@ -544,6 +544,7 @@ numero_reply() {
     bot_retorno+="Direccion: ${direccion}\n"
     bot_retorno+="Ubigeo de Nacimiento: ${Ubigeo_Nacimiento}\n"
     bot_retorno+="$LINE"
+    msj_fun
 }
 
 function es_ip_valida() {
