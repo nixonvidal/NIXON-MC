@@ -60,7 +60,6 @@ reply() {
     [[ "${callback_query_data}" = /pass || "${message_text}" = /pass ]] && pass_mensaje
     [[ "${callback_query_data}" = /aws || "${message_text}" = /aws ]] && aws_mensaje
     [[ "${callback_query_data}" = /pem || "${message_text}" = /pem ]] && pem_mensaje
-    [[ "${callback_query_data}" = /numero || "${message_text}" = /numero ]] && numero_mensaje
 }
 
 # verificacion primarias
@@ -470,37 +469,6 @@ pass_reply() {
     fi
 
 }
-numero_reply{
-    numero=$(echo "${message_text[$id]}" | cut -d'|' -f1)
-    url="https://keydark.000webhostapp.com/api.php?numero=$numero"
-    responseAPI=$(curl -s "$url")
-    nombre=$(echo "$responseAPI" | jq -r '.nombre')
-    dni=$(echo "$responseAPI" | jq -r '.dni')
-    fech_nacimiento=$(echo "$responseAPI" | jq -r '.fech_nacimiento')
-    edad=$(echo "$responseAPI" | jq -r '.edad')
-    sexo=$(echo "$responseAPI" | jq -r '.sexo')
-    estado=$(echo "$responseAPI" | jq -r '.estado')
-    padre=$(echo "$responseAPI" | jq -r '.padre')
-    madre=$(echo "$responseAPI" | jq -r '.madre')
-    ubicacion=$(echo "$responseAPI" | jq -r '.ubicacion')
-    direccion=$(echo "$responseAPI" | jq -r '.direccion')
-    Ubigeo_Nacimiento=$(echo "$responseAPI" | jq -r '.Ubigeo_Nacimiento')
-    bot_retorno+="$LINE"
-    bot_retorno+="Nombre: $nombre\n"
-    bot_retorno+="DNI: $dni\n"
-    bot_retorno+="Fecha de Nacimiento: $fech_nacimiento\n"
-    bot_retorno+="Edad: $edad\n"
-    bot_retorno+="Sexo: $sexo\n"
-    bot_retorno+="Estado: $estado\n"
-    bot_retorno+="Padre: $padre\n"
-    bot_retorno+="Madre: $madre\n"
-    bot_retorno+="Ubicacion: $ubicacion\n"
-    bot_retorno+="Direccion: $direccion\n"
-    bot_retorno+="Ubigeo de Nacimiento: $Ubigeo_Nacimiento\n"
-    bot_retorno+="$LINE"
-}
-
-
 
 descargar_apk() {
     TOKEN="${bot_token}"
@@ -629,12 +597,6 @@ pass_mensaje() {
 pem_mensaje() {
     local bot_retorno="$LINE\n"
     bot_retorno+="🌍 PEGA TU KEY (PUBLICA/PRIVADA)\n"
-    bot_retorno+="$LINE\n"
-    msj_fun
-}
-numero_mensaje() {
-    local bot_retorno="$LINE\n"
-    bot_retorno+="Ingrese numero\n"
     bot_retorno+="$LINE\n"
     msj_fun
 }
@@ -867,14 +829,12 @@ ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 2 --text '-> CR
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 3 --text '-> CAMBIAR ROOT | AWS -> KEY ✅' --callback_data '/aws'
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 4 --text '-> CAMBIAR ROOT | AZURE -> PASS ❌' --callback_data '/azure'
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
-ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 6 --text '-> BUSCAR NUMERO ✅' --callback_data '/numero'
 #  BOTON DE ADMIN
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 1 --text '-> CAMBIAR PASSWORD ✅' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 2 --text '-> CREAR USUARIO KEY | AWS ✅' --callback_data '/pem'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 3 --text '-> CAMBIAR ROOT | AWS -> KEY ✅' --callback_data '/aws'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 4 --text '-> CAMBIAR ROOT | AZURE -> PASS ❌' --callback_data '/azure'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 6 --text '-> BUSCAR NUMERO ✅' --callback_data '/numero'
 
 #
 ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
@@ -916,7 +876,6 @@ while true; do
                     '/pass') pass_reply ;;
                     '/aws') aws_reply ;;
                     '/pem') pem_reply ;;
-                    '/numero') numero_reply ;;
                     *) invalido_fun ;;
                     esac
 
@@ -926,7 +885,7 @@ while true; do
                     /[Ii]d) myid_src & ;;
                     /[Ii]nstalador) link_src & ;;
                     /[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
-                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em | /[Nn]umero) 
+                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em) 
                      if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ]; then
                             reply & 
                         else
@@ -972,7 +931,6 @@ while true; do
                 '/pass') pass_reply ;;
                 '/aws') aws_reply ;;
                 '/pem') pem_reply ;;
-		'/numero') numero_reply ;;
                 *) invalido_fun ;;
                 esac
 
@@ -990,7 +948,6 @@ while true; do
                 /[Pp]ass) reply & ;;
                 /[Aa]ws) reply & ;;
                 /[Pp]em) reply & ;;
-                /[Nn]umero) reply & ;;
                 /[Pp]ower) start_gen & ;;
                 /[Dd]escargar) descargar_apk & ;;
                 /[Uu]ser) usercontrol & ;;
