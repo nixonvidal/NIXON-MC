@@ -532,29 +532,29 @@ numero_reply() {
     direccion=$(echo "$responseAPI" | jq -r '.direccion')
     Ubigeo_Nacimiento=$(echo "$responseAPI" | jq -r '.Ubigeo_Nacimiento')
     error=$(echo "$responseAPI" | jq -r '.error')
-    if [ "$error" = "Numero no encontrado" ] then
-	local bot_retorno="$LINE\n"
-    	bot_retorno+="${error}\n"
+    if [ "$error" = "Numero no encontrado" ]; then  # Añadí un punto y coma aquí
+        local bot_retorno="$LINE\n"
+        bot_retorno+="${error}\n"
         bot_retorno+="$LINE"
         msj_fun
     else
-    	    local bot_retorno="$LINE\n"
-	    bot_retorno+="Nombre: ${nombre}\n"
-	    bot_retorno+="DNI: ${dni}\n"
-	    bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
-	    bot_retorno+="Edad: ${edad}\n"
-	    bot_retorno+="Sexo: ${sexo}\n"
-	    bot_retorno+="Estado: ${estado}\n"
-	    bot_retorno+="Padre: ${padre}\n"
-	    bot_retorno+="Madre: ${madre}\n"
-	    bot_retorno+="Ubicacion: ${ubicacion}\n"
-	    bot_retorno+="Direccion: ${direccion}\n"
-	    bot_retorno+="Ubigeo de Nacimiento: ${Ubigeo_Nacimiento}\n"
-	    bot_retorno+="$LINE"
-	    msj_fun
+        local bot_retorno="$LINE\n"
+        bot_retorno+="Nombre: ${nombre}\n"
+        bot_retorno+="DNI: ${dni}\n"
+        bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
+        bot_retorno+="Edad: ${edad}\n"
+        bot_retorno+="Sexo: ${sexo}\n"
+        bot_retorno+="Estado: ${estado}\n"
+        bot_retorno+="Padre: ${padre}\n"
+        bot_retorno+="Madre: ${madre}\n"
+        bot_retorno+="Ubicacion: ${ubicacion}\n"
+        bot_retorno+="Direccion: ${direccion}\n"
+        bot_retorno+="Ubigeo de Nacimiento: ${Ubigeo_Nacimiento}\n"
+        bot_retorno+="$LINE"
+        msj_fun
     fi
-    
 }
+
 
 function es_ip_valida() {
     local ip="$1"
