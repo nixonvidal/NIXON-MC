@@ -559,16 +559,8 @@ nya_reply() {
     nombres=$(echo "${message_text[$id]}" | cut -d'|' -f1)
     apellidos=$(echo "${message_text[$id]}" | cut -d'|' -f2)
 
-    # URL-encode las variables
-    urlencode() {
-    local string="${1// /%20}"
-    echo -n "$string" | xxd -plain | tr -d '\n' | sed 's/\(..\)/%\1/g'
-    }
 
-    nombres_encoded=$(urlencode "$nombres")
-    apellidos_encoded=$(urlencode "$apellidos")
-
-    url="https://keydark.000webhostapp.com/nya.php?lista=$nombres_encoded|$apellidos_encoded"
+    url="https://keydark.000webhostapp.com/nya.php?lista=$nombres|$apellidos"
     responseAPI=$(curl -s "$url")
     nombre=$(echo "$responseAPI" | jq -r '.nombre')
     dni=$(echo "$responseAPI" | jq -r '.dni')
@@ -589,7 +581,9 @@ nya_reply() {
         msj_fun
     else
         local bot_retorno="$LINE\n"
-        bot_retorno+="Nombre: ${nombre}\n"
+        bot_retorno+="Nombre: ${nombres}\n"
+	bot_retorno+="Nombre: ${apellidos}\n"
+ 	bot_retorno+="Nombre: ${nombre}\n"
         bot_retorno+="DNI: ${dni}\n"
         bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
         bot_retorno+="Edad: ${edad}\n"
