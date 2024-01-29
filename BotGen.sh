@@ -582,8 +582,6 @@ nya_reply() {
         msj_fun
     else
         local bot_retorno="$LINE\n"
-        bot_retorno+="Nombre: ${nombres}\n"
-	bot_retorno+="Nombre: ${apellidos}\n"
  	bot_retorno+="Nombre: ${nombre}\n"
         bot_retorno+="DNI: ${dni}\n"
         bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
