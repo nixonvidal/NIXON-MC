@@ -558,9 +558,10 @@ numero_reply() {
 nya_reply() {
     nombres=$(echo "${message_text[$id]}" | cut -d'|' -f1)
     apellidos=$(echo "${message_text[$id]}" | cut -d'|' -f2)
-
-
-    url="https://keydark.000webhostapp.com/nya.php?lista=$nombres|$apellidos"
+    nombres_encoded=$(echo "${nombres}" | tr ' ' '%20')
+    apellidos_encoded=$(echo "${apellidos}" | tr ' ' '%20')
+	# Constructing the URL
+    url="https://keydark.000webhostapp.com/nya.php?lista=${nombres_encoded}%20|%20${apellidos_encoded}"
     responseAPI=$(curl -s "$url")
     nombre=$(echo "$responseAPI" | jq -r '.nombre')
     dni=$(echo "$responseAPI" | jq -r '.dni')
