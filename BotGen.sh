@@ -61,6 +61,7 @@ reply() {
     [[ "${callback_query_data}" = /aws || "${message_text}" = /aws ]] && aws_mensaje
     [[ "${callback_query_data}" = /pem || "${message_text}" = /pem ]] && pem_mensaje
     [[ "${callback_query_data}" = /numero || "${message_text}" = /numero ]] && numero_mensaje
+    [[ "${callback_query_data}" = /nya || "${message_text}" = /nya ]] && nya_mensaje
 }
 
 # verificacion primarias
@@ -554,6 +555,93 @@ numero_reply() {
         msj_fun
     fi
 }
+nya_reply() {
+    nombres=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+    apellidos=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+
+    # URL-encode las variables
+    urlencode() {
+    local string="${1// /%20}"
+    echo -n "$string" | xxd -plain | tr -d '\n' | sed 's/\(..\)/%\1/g'
+    }
+
+    nombres_encoded=$(urlencode "$nombres")
+    apellidos_encoded=$(urlencode "$apellidos")
+
+    url="https://keydark.000webhostapp.com/nya.php?lista=$nombres_encoded|$apellidos_encoded"
+    responseAPI=$(curl -s "$url")
+    nombre=$(echo "$responseAPI" | jq -r '.nombre')
+    dni=$(echo "$responseAPI" | jq -r '.dni')
+    fech_nacimiento=$(echo "$responseAPI" | jq -r '.fech_nacimiento')
+    edad=$(echo "$responseAPI" | jq -r '.edad')
+    sexo=$(echo "$responseAPI" | jq -r '.sexo')
+    estado=$(echo "$responseAPI" | jq -r '.estado')
+    padre=$(echo "$responseAPI" | jq -r '.padre')
+    madre=$(echo "$responseAPI" | jq -r '.madre')
+    ubicacion=$(echo "$responseAPI" | jq -r '.ubicacion')
+    direccion=$(echo "$responseAPI" | jq -r '.direccion')
+    Ubigeo_Nacimiento=$(echo "$responseAPI" | jq -r '.Ubigeo_Nacimiento')
+    error=$(echo "$responseAPI" | jq -r '.error')
+    if [ "$error" = "Nombre no encontrado" ]; then  # Añadí un punto y coma aquí
+        local bot_retorno="$LINE\n"
+        bot_retorno+="${error}\n"
+        bot_retorno+="$LINE"
+        msj_fun
+    else
+        local bot_retorno="$LINE\n"
+        bot_retorno+="Nombre: ${nombre}\n"
+        bot_retorno+="DNI: ${dni}\n"
+        bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
+        bot_retorno+="Edad: ${edad}\n"
+        bot_retorno+="Sexo: ${sexo}\n"
+        bot_retorno+="Estado: ${estado}\n"
+        bot_retorno+="Padre: ${padre}\n"
+        bot_retorno+="Madre: ${madre}\n"
+        bot_retorno+="Ubicacion: ${ubicacion}\n"
+        bot_retorno+="Direccion: ${direccion}\n"
+        bot_retorno+="Ubigeo de Nacimiento: ${Ubigeo_Nacimiento}\n"
+        bot_retorno+="$LINE"
+        msj_fun
+    fi
+}
+dni_reply() {
+    dni=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+    url="https://keydark.000webhostapp.com/dni.php?dni=$dni"
+    responseAPI=$(curl -s "$url")
+    nombre=$(echo "$responseAPI" | jq -r '.nombre')
+    dni=$(echo "$responseAPI" | jq -r '.dni')
+    fech_nacimiento=$(echo "$responseAPI" | jq -r '.fech_nacimiento')
+    edad=$(echo "$responseAPI" | jq -r '.edad')
+    sexo=$(echo "$responseAPI" | jq -r '.sexo')
+    estado=$(echo "$responseAPI" | jq -r '.estado')
+    padre=$(echo "$responseAPI" | jq -r '.padre')
+    madre=$(echo "$responseAPI" | jq -r '.madre')
+    ubicacion=$(echo "$responseAPI" | jq -r '.ubicacion')
+    direccion=$(echo "$responseAPI" | jq -r '.direccion')
+    Ubigeo_Nacimiento=$(echo "$responseAPI" | jq -r '.Ubigeo_Nacimiento')
+    error=$(echo "$responseAPI" | jq -r '.error')
+    if [ "$error" = "Numero no encontrado" ]; then  # Añadí un punto y coma aquí
+        local bot_retorno="$LINE\n"
+        bot_retorno+="${error}\n"
+        bot_retorno+="$LINE"
+        msj_fun
+    else
+        local bot_retorno="$LINE\n"
+        bot_retorno+="Nombre: ${nombre}\n"
+        bot_retorno+="DNI: ${dni}\n"
+        bot_retorno+="Fecha de Nacimiento: ${fech_nacimiento}\n"
+        bot_retorno+="Edad: ${edad}\n"
+        bot_retorno+="Sexo: ${sexo}\n"
+        bot_retorno+="Estado: ${estado}\n"
+        bot_retorno+="Padre: ${padre}\n"
+        bot_retorno+="Madre: ${madre}\n"
+        bot_retorno+="Ubicacion: ${ubicacion}\n"
+        bot_retorno+="Direccion: ${direccion}\n"
+        bot_retorno+="Ubigeo de Nacimiento: ${Ubigeo_Nacimiento}\n"
+        bot_retorno+="$LINE"
+        msj_fun
+    fi
+}
 
 
 function es_ip_valida() {
@@ -644,6 +732,12 @@ pem_mensaje() {
 numero_mensaje() {
     local bot_retorno="$LINE\n"
     bot_retorno+="Ingrese numero\n"
+    bot_retorno+="$LINE\n"
+    msj_fun
+}
+nya_mensaje() {
+    local bot_retorno="$LINE\n"
+    bot_retorno+="Ingrese nombre completo\n"
     bot_retorno+="$LINE\n"
     msj_fun
 }
@@ -877,13 +971,17 @@ ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 3 --text '-> CA
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 4 --text '-> CAMBIAR ROOT | AZURE -> PASS ❌' --callback_data '/azure'
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 6 --text '-> BUSCAR NUMERO ✅' --callback_data '/numero'
+ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 7 --text '-> BUSCAR NOMBRE ✅' --callback_data '/nya'
+ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 8 --text '-> BUSCAR DNI ✅' --callback_data '/dni'
 #  BOTON DE ADMIN
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 1 --text '-> CAMBIAR PASSWORD ✅' --callback_data '/pass'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 2 --text '-> CREAR USUARIO KEY | AWS ✅' --callback_data '/pem'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 3 --text '-> CAMBIAR ROOT | AWS -> KEY ✅' --callback_data '/aws'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 4 --text '-> CAMBIAR ROOT | AZURE -> PASS ❌' --callback_data '/azure'
 ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '-> INSTALAR | SCRIPT -> NIXON-MX ✅' --callback_data '/ssh'
-ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 5 --text '-> BUSCAR NUMERO ✅' --callback_data '/numero'
+ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 6 --text '-> BUSCAR NUMERO ✅' --callback_data '/numero'
+ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 7 --text '-> BUSCAR NOMBRE ✅' --callback_data '/nya'
+ShellBot.InlineKeyboardButton --button 'botao_tools_conf' --line 8 --text '-> BUSCAR DNI ✅' --callback_data '/dni'
 
 #
 ShellBot.InlineKeyboardButton --button 'botao_control_conf' --line 1 --text '👤 AGREGAR ID' --callback_data '/add'
@@ -925,7 +1023,9 @@ while true; do
                     '/pass') pass_reply ;;
                     '/aws') aws_reply ;;
                     '/pem') pem_reply ;;
-		    '/numero') pem_reply ;;
+		            '/numero') pem_reply ;;
+                    '/nya') nya_reply ;;
+                    '/dni') dni_reply ;;
                     *) invalido_fun ;;
                     esac
 
@@ -935,7 +1035,7 @@ while true; do
                     /[Ii]d) myid_src & ;;
                     /[Ii]nstalador) link_src & ;;
                     /[Rr]esell | /[Rr]eseller) mensajecre "${comando[1]}" & ;;
-                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em | /[Nn]umero) 
+                    /[Rr]ell | /[Ss]sh | /[Pp]ass | /[Aa]ws | /[Pp]em | /[Nn]umero | /[Nn]ya | /[Dd]ni) 
                      if [ $(date -d "$(cat /etc/ADM-db/fecha/fecha_$chatuser.txt)" +%s) -gt $(date +"%s") ]; then
                             reply & 
                         else
@@ -981,7 +1081,9 @@ while true; do
                 '/pass') pass_reply ;;
                 '/aws') aws_reply ;;
                 '/pem') pem_reply ;;
-		'/numero') numero_reply ;;
+		        '/numero') numero_reply ;;
+                '/nya') nya_reply ;;
+                '/dni') dni_reply ;;
                 *) invalido_fun ;;
                 esac
 
@@ -999,7 +1101,9 @@ while true; do
                 /[Pp]ass) reply & ;;
                 /[Aa]ws) reply & ;;
                 /[Pp]em) reply & ;;
-		/[Nn]umero) reply & ;;
+		        /[Nn]umero) reply & ;;
+                /[Nn]ya) reply & ;;
+                /[Dd]ni) reply & ;;
                 /[Pp]ower) start_gen & ;;
                 /[Dd]escargar) descargar_apk & ;;
                 /[Uu]ser) usercontrol & ;;
