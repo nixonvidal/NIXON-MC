@@ -1067,7 +1067,8 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MEN
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text 'CMD' --callback_data '/cmd'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️NIXON MC PRO ⬇️' --callback_data '/descargar'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 5 --text 'CMD' --callback_data '/cmd'
 
 
 #BOTON DE USUARIOS 
