@@ -1059,23 +1059,24 @@ autori() {
 
 #botao_donar=''
 #BOTON CMD DEL ADMIN
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text 'CMD' --callback_data '/cmd'
 
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 1 --text '👤 CONTROL USER' --callback_data '/user'
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 2 --text '❌ POWER ✅' --callback_data '/power'
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 3 --text '🛠️ MENU' --callback_data '/menu'
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 4 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 5 --text '🔑 KEYGEN' --callback_data '/keygen'
-ShellBot.InlineKeyboardButton --button 'cmd_conf' --line 6 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
+
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '👤 CONTROL USER' --callback_data '/user'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '❌ POWER ✅' --callback_data '/power'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MENU' --callback_data '/menu'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text 'CMD' --callback_data '/cmd'
 
 
 #BOTON DE USUARIOS 
-ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text 'CMD' --callback_data '/cmd'
 
-ShellBot.InlineKeyboardButton --button 'cmd_user' --line 1 --text 'MENU' --callback_data '/menu'
-ShellBot.InlineKeyboardButton --button 'cmd_user' --line 2 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
-ShellBot.InlineKeyboardButton --button 'cmd_user' --line 3 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
-ShellBot.InlineKeyboardButton --button 'cmd_user' --line 4 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text 'MENU' --callback_data '/menu'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 2 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 3 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 4 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 5 --text 'CMD' --callback_data '/cmd'
 
 #   BOTON USER
 ShellBot.InlineKeyboardButton --button 'botao_tools_user' --line 1 --text '-> CAMBIAR PASSWORD ✅' --callback_data '/pass'
