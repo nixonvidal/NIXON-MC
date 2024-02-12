@@ -97,7 +97,7 @@ gerar_key() {
     bot_retorno+="☫ S.O Recomendado 📀Ubuntu 20 x64\n"
     bot_retorno+="☫Ubuntu 18-23 x64- Debian 7,8,9,10 x64\n"
     bot_retorno+="═══════════ ◖◍◗ ═══════════\n"
-    bot_retorno+="©ঔৣ‌➳•སར×๑ས ༒۝•ʍc•🇵🇪®➋⓪➋➋\n"
+    bot_retorno+="©ঔৣ‌➳•སར×๑ས ༒۝•ʍc•🇵🇪®➋⓪➋➃\n"
     bot_retorno+="█│║▌ ║││█║▌ │║║█║█│║▌ ║\n"
     bot_retorno+="𝓓𝓮𝓻𝓮𝓬𝓱𝓸𝓼 𝓡𝓮𝓼𝓮𝓻𝓿𝓪𝓭𝓸𝓼 𝓒𝓸𝓹𝔂𝓻𝓲𝓰𝓱𝓽 𝓝𝓲𝔁𝓸𝓷 𝓜𝓒 \n"
     bot_retorno+="═══════════ ◖◍◗ ═══════════\n"
@@ -760,8 +760,9 @@ menu_src() {
         unset usadas
         usadas="$(cat /etc/http-instas)"
         [[ ! $usadas ]] && k_used="0" || k_used="$usadas"
-        bot_retorno+="🔰 BIENVENIDO AL BOT 🔰\n"
-        bot_retorno+="▫️Panel de control | NixonMc 9.7▫️\n"
+        bot_retorno+="🔰 BIENVENIDO AL BOT MULTIPROPOSITO 🔰\n"
+        bot_retorno+="▫️Panel de control | NixonMc 10.5▫️\n"
+	bot_retorno+="🐈‍⬛ El mejor Bot De doxeo, generador de keys y IA🐧\n"
         bot_retorno+="Gen $PID_GEN | Keys Used [$k_used]\n"
         bot_retorno+="KEY 𝑮𝑬𝑵𝑬𝑹𝑨𝑫𝑨:  [  $(ls /etc/http-shell/ | grep name | wc -l) ]\n"
         bot_retorno+="	RESELLER: $credi\n"
@@ -1066,7 +1067,7 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '❌ POWER �
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MENU' --callback_data '/menu'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🛠️ TOOLS 🛠️' --callback_data '/tools'
-ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️DESCARGAR NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️NIKOBHYN TOOLS⬇️' --callback_data '/descargar'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 4 --text '⬇️NIXON MC PRO ⬇️' --callback_data '/descargar'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 5 --text 'CMD' --callback_data '/cmd'
 
