@@ -124,7 +124,7 @@ iniciar_BOT() {
     echo "Iniciando BOT"
 
     # Nombre del entorno virtual
-    VENV_NAME="BOT"
+    VENV_NAME="envBOT"
     # Verificar si el entorno virtual ya está creado
     if [ ! -d "$VENV_NAME" ]; then
         # Crear el entorno virtual
@@ -134,7 +134,7 @@ iniciar_BOT() {
     # Verificar si la sesión ya existe
     if ! screen -ls | grep -q "$NOMBRE_SESION"; then
         # Crear la sesión y ejecutar el comando
-        screen -dmS "$NOMBRE_SESION" bash -c "source /root/BOT/bin/activate && python /root/BOT/bot.py"
+        screen -dmS "$NOMBRE_SESION" bash -c "source /root/envBOT/bin/activate && python /root/BOT/bot.py"
     fi
     sleep 6
     echo "Iniciando correctamente."
