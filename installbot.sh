@@ -143,7 +143,9 @@ iniciar_BOT() {
     # Verificar si la sesión ya existe
     if ! screen -ls | grep -q "$NOMBRE_SESION"; then
         # Crear la sesión y ejecutar el comando
-        screen -dmS "$NOMBRE_SESION" bash -c "source /root/envBOT/bin/activate && python /root/BOT/bot.py"
+        #screen -dmS "$NOMBRE_SESION" bash -c "source /root/envBOT/bin/activate && python /root/BOT/bot.py"
+        source /root/envBOT/bin/activate && cd /root/BOT && screen -dmS sesion_bot python bot.py > /dev/null 2>&1
+
     fi
     sleep 6
     echo "Iniciando correctamente."
