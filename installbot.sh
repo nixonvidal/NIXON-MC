@@ -102,7 +102,7 @@ instalar_pip() {
     fi
     source /root/envBOT/bin/activate
     cd /root/BOT
-    pip install pyrogram python-dotenv virtualenv request
+    pip install pyrogram python-dotenv virtualenv requests
 
     # Verificar si la instalación fue exitosa
     if [ $? -eq 0 ]; then
