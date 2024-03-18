@@ -93,6 +93,14 @@ instalar_pip() {
     echo "INSTALANDO SQLITE3..."
     sudo apt install sqlite3 -y
     echo "INSTALANDO PIP..."
+    # Nombre del entorno virtual
+    VENV_NAME="envBOT"
+    # Verificar si el entorno virtual ya está creado
+    if [ ! -d "$VENV_NAME" ]; then
+        # Crear el entorno virtual
+        virtualenv $VENV_NAME >/dev/null 2>&1
+    fi
+    source /root/envBOT/bin/activate
     cd /root/BOT
     pip install pyrogram python-dotenv virtualenv request
 
