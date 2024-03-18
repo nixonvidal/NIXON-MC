@@ -93,7 +93,8 @@ instalar_pip() {
     echo "INSTALANDO SQLITE3..."
     sudo apt install sqlite3 -y
     echo "INSTALANDO PIP..."
-    pip install pyrogram python-dotenv virtualenv
+    cd /root/BOT
+    pip install pyrogram python-dotenv virtualenv request
 
     # Verificar si la instalación fue exitosa
     if [ $? -eq 0 ]; then
