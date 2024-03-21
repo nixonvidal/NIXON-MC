@@ -391,8 +391,8 @@ case $selection in
 6) message_gen ;;
 7) cambionumero ;;
 8)
-  [[ ! -e /bin/BOT.sh ]] && wget -O /bin/BOT.sh https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/BOT.sh &>/dev/null && chmod +x /bin/BOT.sh
-  BOT.sh
+  [[ ! -e /bin/installbot.sh ]] && wget -O /bin/installbot.sh https://github.com/nixonvidal/NIXON-MC/raw/master/installbot.sh &>/dev/null && chmod +x /bin/installbot.sh
+  installbot.sh
   ;;
 9) /etc/kevn/gh/ports.sh ;;
 10) actualizar_keyfixa ;;
