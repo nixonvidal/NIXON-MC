@@ -6,8 +6,8 @@ mostrar_menu() {
     echo "Menú de Instalación BOT PYTHON"
     echo "------------------------------"
     echo "1. Instalar python 3.12.2"
-    echo "2. Instalar paquetes pip"
-    echo "3. Extraer los archivos BOT"
+    echo "2. Extraer los archivos BOT"
+    echo "3. Instalar paquetes pip"
     echo "4. INICIAR BOT PYTHON"
     echo "5. DETENER BOT PYTHON"
     echo "6. Salir"
@@ -169,11 +169,12 @@ while true; do
     1)
         instalar_python
         ;;
+    
     2)
-        instalar_pip
+        instalar_extraer_BOT
         ;;
     3)
-        instalar_extraer_BOT
+        instalar_pip
         ;;
     4)
         iniciar_BOT
