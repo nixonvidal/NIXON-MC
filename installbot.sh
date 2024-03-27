@@ -11,8 +11,6 @@ mostrar_menu() {
     echo "6. Salir"
     echo "------------------------------"
 }
-
-# Función para instalar paquete A
 instalar_python() {
     # Colores para resaltar los mensajes
     GREEN='\033[0;32m'
@@ -135,7 +133,7 @@ iniciar_BOT() {
     # Verificar si el entorno virtual ya está creado
     if [ ! -d "$VENV_NAME" ]; then
         # Crear el entorno virtual
-        virtualenv $VENV_NAME >/dev/null 2>&1
+        virtualenv $VENV_NAME
     fi
     NOMBRE_SESION="sesion_bot"
     # Verificar si la sesión ya existe
