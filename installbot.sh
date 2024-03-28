@@ -88,6 +88,7 @@ instalar_pip() {
     clear
     echo "INSTALANDO SQLITE3..."
     sudo apt install sqlite3 -y
+    sudo apt install sshpass -y
     echo "INSTALANDO PIP..."
     # Nombre del entorno virtual
     VENV_NAME="/root/envBOT"
@@ -98,7 +99,7 @@ instalar_pip() {
     fi
     source /root/envBOT/bin/activate
     cd /root/BOT
-    pip install pyrogram python-dotenv virtualenv requests
+    pip install pyrogram python-dotenv virtualenv requests paramiko
 
     # Verificar si la instalación fue exitosa
     if [ $? -eq 0 ]; then
