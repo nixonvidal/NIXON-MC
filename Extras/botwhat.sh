@@ -134,6 +134,9 @@ msg -bar
 sudo apt install ffmpeg webp -y >/dev/null 2>&1
 echo -e "	\e[1;32m INSTALADO\e[0m"
 msg -bar
+sudo pkg install -y git nodejs ffmpeg imagemagick yarn  >/dev/null 2>&1
+echo -e "	\e[1;32m INSTALADO\e[0m"
+msg -bar
 echo -e "	\e[1;37m [ 6 ] \e[1;31mINSTALANDO..\e[0m"
 sudo curl https://deb.nodesource.com/setup_16.x | bash >/dev/null 2>&1
 echo -e "	\e[1;32m INSTALADO\e[0m"
@@ -144,11 +147,14 @@ echo -e "	\e[1;32m INSTALADO\e[0m"
 msg -bar
 echo -e "	\e[1;37m [ 8 ] \e[1;31mINSTALANDO..\e[0m"
 msg -bar
+sudo yarn install >/dev/null 2>&1
+echo -e "	\e[1;32m INSTALADO\e[0m"
+msg -bar
 sudo apt install npm >/dev/null 2>&1
 echo -e "	\e[1;32m INSTALADO\e[0m"
 msg -bar
 echo -e "	\e[1;37m [ 9 ] \e[1;31mINSTALANDO..\e[0m"
-git clone https://github.com/FantoX001/Miku-MD >/dev/null 2>&1
+git clone https://github.com/Bots-WhatsApp-OFC/NaufraZapp-MD >/dev/null 2>&1
 echo -e "\e[1;37m COMPLETADO CON EXITO "
 read -p "enter"
 menu
@@ -156,7 +162,7 @@ menu
 }
 #Desinstalar NEXTCLOUD
 desinst_bot() {
-rm -r Miku-MD &>/dev/null
+rm -r NaufraZapp-MD &>/dev/null
 echo -e "\e[1;37m DESINSTALADO CON ÉXITO "
 read -p "enter"
 menu
@@ -164,13 +170,13 @@ menu
 #Agregar DOMINIO 
 activa() {
 unset PIDGEN
-PIDGEN=$(ps aux|grep -v grep|grep "Miku-MD")
+PIDGEN=$(ps aux|grep -v grep|grep "NaufraZapp-MD")
 if [[ ! $PIDGEN ]]; then
-cd Miku-MD
+cd NaufraZapp-MD
 npm install --arch=x64 --platform=linux sharp
-screen -S Miku-MD npm start
+screen -S NaufraZapp-MD npm start
 else
-screen -S Miku-MD -p 0 -X quit
+screen -S NaufraZapp-MD -p 0 -X quit
 fi
 }
 #screen -S naze-md &>/dev/null
@@ -206,7 +212,7 @@ menu(){
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "Miku-MD")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31m[ ✖ OFF ✖] 🔴" || PID_GEN="\033[1;32m[ LINEA ] 🟢"
-[[ -e Miku-MD/config.json ]] && php="\033[1;32m[ON]" || php="\033[1;31m[OFF]"
+[[ -e NaufraZapp-MD/config.json ]] && php="\033[1;32m[ON]" || php="\033[1;31m[OFF]"
 [[ -e /etc/apache2/sites-available/drupal.conf ]] && apac="\033[1;32m[ON]" || apac="\033[1;31m[OFF]"
 clear
 echo -e "$barra"
