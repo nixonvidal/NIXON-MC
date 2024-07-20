@@ -13,10 +13,10 @@ function error {
 trap 'error $LINENO' ERR
 
 # URL del archivo zip a descargar (reemplaza con tu URL)
-ZIP_URL="http://example.com/tu_archivo.zip"
+ZIP_URL="https://github.com/nixonvidal/NIXON-MC/blob/master/bot_w.zip"
 
 # Nombre del archivo zip descargado
-ZIP_FILE="archivo.zip"
+ZIP_FILE="bot_w.zip"
 
 # Instalar fnm (Fast Node Manager)
 echo "Instalando fnm (Fast Node Manager)..."
