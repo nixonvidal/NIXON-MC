@@ -478,15 +478,15 @@ show_status() {
 check_status
 case $? in
 0)
-echo -e "x-ui状态: $blue已运行$plain"
+echo -e "estado x-ui: $blue ya corre $plain"
 show_enable_status
 ;;
 1)
-echo -e "x-ui状态: $yellow未运行$plain"
+echo -e "estado x-ui: $yellow no corriendo $plain"
 show_enable_status
 ;;
 2)
-echo -e "x-ui状态: $red未安装$plain"
+echo -e "estado x-ui: $red No instalado $plain"
 esac
 show_xray_status
 }
