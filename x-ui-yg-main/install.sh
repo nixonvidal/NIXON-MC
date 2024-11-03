@@ -2200,47 +2200,47 @@ echo -e "${bblue}     ░██        ░${plain}██    ░██ ██    
 echo -e "${bblue}     ░██ ${plain}        ░██    ░░██        ░██ ░██       ░${red}██ ░██       ░██ ░██ ${plain}  "
 echo -e "${bblue}     ░█${plain}█          ░██ ██ ██         ░██  ░░${red}██     ░██  ░░██     ░██  ░░██ ${plain}  "
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "甬哥Github项目  ：github.com/yonggekkk"
-white "甬哥Blogger博客 ：ygkkk.blogspot.com"
-white "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
+white "Github  ：github.com/"
+white "Blogger：ygkkk.blogspot.com"
+white "YouTube ：www.youtube.com/@"
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-white "x-ui-yg脚本快捷方式：x-ui"
+white "x-ui-yg script shortcut: x-ui"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-green " 1. 一键安装 x-ui"
-green " 2. 删除卸载 x-ui"
+green " 1. Instalación de x-ui con un clic"
+green " 2. Eliminar/desinstalar x-ui"
 echo "----------------------------------------------------------------------------------"
-green " 3. 其他设置 【Argo双隧道、订阅优选IP、Gitlab订阅链接】"
-green " 4. 变更 x-ui 面板设置 【用户名密码、登录端口、还原面板】"
-green " 5. 关闭、重启 x-ui"
-green " 6. 更新 x-ui 脚本"
+green " 3. Otras configuraciones 【Doble túnel Argo, IP preferente de suscripción, enlace de suscripción Gitlab】"
+green " 4. Cambiar la configuración del panel x-ui 【Usuario y contraseña, puerto de acceso, restaurar panel】"
+green " 5. Apagar, reiniciar x-ui"
+green " 6. Actualizar el script de x-ui"
 echo "----------------------------------------------------------------------------------"
-green " 7. 更新并查看聚合通用节点、clash-meta与sing-box客户端配置及订阅链接"
-green " 8. 查看 x-ui 运行日志"
-green " 9. 一键原版BBR+FQ加速"
-green "10. 管理 Acme 申请域名证书"
-green "11. 管理 Warp 查看本地Netflix、ChatGPT解锁情况，无限获取warp-wireguard账号配置"
-green "12. 刷新当前主菜单参数显示"
-green " 0. 退出脚本"
+green " 7. Actualizar y ver configuración y enlaces de suscripción de nodos comunes, clientes clash-meta y sing-box"
+green " 8. Ver el registro de ejecución de x-ui"
+green " 9. Aceleración con BBR+FQ de un clic"
+green "10. Administrar certificados de dominio con Acme"
+green "11. Administrar Warp, ver estado de desbloqueo de Netflix y ChatGPT localmente, obtener configuración de cuenta warp-wireguard ilimitada"
+green "12. Refrescar visualización de parámetros del menú principal actual"
+green " 0. Salir del script"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
 insV=$(cat /usr/local/x-ui/v 2>/dev/null)
-#latestV=$(curl -s https://gitlab.com/rwkgyg/x-ui-yg/-/raw/main/version/version | awk -F "更新内容" '{print $1}' | head -n 1)
-latestV=$(curl -sL https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/version | awk -F "更新内容" '{print $1}' | head -n 1)
+#latestV=$(curl -s https://gitlab.com/rwkgyg/x-ui-yg/-/raw/main/version/version | awk -F "Actualizar contenido" '{print $1}' | head -n 1)
+latestV=$(curl -sL https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/version | awk -F "Actualizar contenido" '{print $1}' | head -n 1)
 if [[ -f /usr/local/x-ui/v ]]; then
 if [ "$insV" = "$latestV" ]; then
-echo -e "当前 x-ui-yg 脚本最新版：${bblue}${insV}${plain} (已安装)"
+echo -e "Versión actual del script x-ui-yg más reciente: ${bblue}${insV}${plain} (ya instalada)"
 else
-echo -e "当前 x-ui-yg 脚本版本号：${bblue}${insV}${plain}"
-echo -e "检测到最新 x-ui-yg 脚本版本号：${yellow}${latestV}${plain} (可选择6进行更新)"
+echo -e "Número de versión actual del script x-ui-yg: ${bblue}${insV}${plain}"
+echo -e "Se detectó la versión más reciente del script x-ui-yg: ${yellow}${latestV}${plain} (puedes elegir 6 para actualizar)"
 echo -e "${yellow}$(curl -sL https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/version)${plain}"
 #echo -e "${yellow}$(curl -sL https://gitlab.com/rwkgyg/x-ui-yg/-/raw/main/version/version)${plain}"
 fi
 else
-echo -e "当前 x-ui-yg 脚本版本号：${bblue}${latestV}${plain}"
-echo -e "请先选择 1 ，安装 x-ui-yg 脚本"
+echo -e "Número de versión actual del script x-ui-yg: ${bblue}${latestV}${plain}"
+echo -e "Por favor, selecciona primero 1 para instalar el script x-ui-yg"
 fi
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
-echo -e "VPS状态如下："
-echo -e "系统:$blue$op$plain  \c";echo -e "内核:$blue$version$plain  \c";echo -e "处理器:$blue$cpu$plain  \c";echo -e "虚拟化:$blue$vi$plain  \c";echo -e "BBR算法:$blue$bbr$plain"
+echo -e "El estado de VPS es el siguiente："
+echo -e "Sistema: $blue$op$plain  \c"; echo -e "Núcleo: $blue$version$plain  \c"; echo -e "Procesador: $blue$cpu$plain  \c"; echo -e "Virtualización: $blue$vi$plain  \c"; echo -e "Algoritmo BBR: $blue$bbr$plain"
 v4v6
 if [[ "$v6" == "2a09"* ]]; then
 w6="【WARP】"
@@ -2249,22 +2249,22 @@ if [[ "$v4" == "104.28"* ]]; then
 w4="【WARP】"
 fi
 if [[ -z $v4 ]]; then
-vps_ipv4='无IPV4'      
+ps_ipv4='Sin IPV4'     
 vps_ipv6="$v6"
 elif [[ -n $v4 && -n $v6 ]]; then
 vps_ipv4="$v4"    
 vps_ipv6="$v6"
 else
 vps_ipv4="$v4"    
-vps_ipv6='无IPV6'
+vps_ipv6='Sin IPV6'
 fi
-echo -e "本地IPV4地址：$blue$vps_ipv4$w4$plain   本地IPV6地址：$blue$vps_ipv6$w6$plain"
+echo -e "Dirección IPV4 local: $blue$vps_ipv4$w4$plain   Dirección IPV6 local: $blue$vps_ipv6$w6$plain"
 echo "------------------------------------------------------------------------------------"
 argopid
 if [[ -n $(ps -e | grep -w $ym 2>/dev/null) || -n $(ps -e | grep -w $ls 2>/dev/null) ]]; then
 if [[ -f /usr/local/x-ui/xuiargoport.log ]]; then
 argoprotocol=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .protocol' /usr/local/x-ui/bin/config.json)
-echo -e "Argo临时隧道状态：$blue已启动 【监听$yellow${argoprotocol}-ws$plain$blue节点的端口:$plain$yellow$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)$plain$blue】$plain$plain"
+echo -e "Estado del túnel temporal Argo: $blue Iniciado 【Escuchando en el puerto $yellow${argoprotocol}-ws$plain$blue】$plain"
 argotro=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].password' /usr/local/x-ui/bin/config.json)
 argoss=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.password' /usr/local/x-ui/bin/config.json)
 argouuid=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].id' /usr/local/x-ui/bin/config.json)
@@ -2279,53 +2279,55 @@ fi
 argotls=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .streamSettings.security' /usr/local/x-ui/bin/config.json)
 if [[ -n $argouuid ]]; then
 if [[ "$argotls" = "tls" ]]; then
-echo -e "错误反馈：$red面板创建的ws节点开启了tls，不支持Argo，请在面板对应的节点中关闭tls$plain"
+echo -e "Retroalimentación de error: $red El nodo ws creado por el panel tiene TLS activado, lo que no es compatible con Argo. Por favor, desactiva TLS en el nodo correspondiente del panel.$plain"
 else
-echo -e "Argo密码/UUID：$blue$argoma$plain"
-echo -e "Argo路径path：$blue$argopath$plain"
-argolsym=$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')
-[[ $(echo "$argolsym" | grep -w "api.trycloudflare.com/tunnel") ]] && argolsyms='生成失败，请重置' || argolsyms=$argolsym
-echo -e "Argo临时域名：$blue$argolsyms$plain"
-
+    echo -e "Contraseña/UUID de Argo: $blue$argoma$plain"
+    echo -e "Ruta de Argo: $blue$argopath$plain"
+    argolsym=$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')
+    [[ $(echo "$argolsym" | grep -w "api.trycloudflare.com/tunnel") ]] && argolsyms='Generación fallida, por favor reinicia' || argolsyms=$argolsym
+    echo -e "Nombre de dominio temporal de Argo: $blue$argolsyms$plain"
 fi
 else
-echo -e "错误反馈：$red面板尚未创建一个端口为$yellow$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)$plain$red的ws节点，推荐vmess-ws$plain$plain"
+    echo -e "Retroalimentación de error: $red El panel aún no ha creado un nodo ws en el puerto $yellow$(cat /usr/local/x-ui/xuiargoport.log 2>/dev/null)$plain$red, se recomienda vmess-ws$plain$plain"
 fi
 fi
 
 if [[ -f /usr/local/x-ui/xuiargoymport.log && -f /usr/local/x-ui/xuiargoport.log ]]; then
-echo "--------------------------"
+    echo "--------------------------"
 fi
 
 if [[ -f /usr/local/x-ui/xuiargoymport.log ]]; then
-argoprotocol=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .protocol' /usr/local/x-ui/bin/config.json)
-echo -e "Argo固定隧道状态：$blue已启动 【监听$yellow${argoprotocol}-ws$plain$blue节点的端口:$plain$yellow$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)$plain$blue】$plain$plain"
-argotro=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].password' /usr/local/x-ui/bin/config.json)
-argoss=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.password' /usr/local/x-ui/bin/config.json)
-argouuid=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].id' /usr/local/x-ui/bin/config.json)
-argopath=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .streamSettings.wsSettings.path' /usr/local/x-ui/bin/config.json)
-if [[ ! $argouuid = "null" ]]; then
-argoma=$argouuid
-elif [[ ! $argoss = "null" ]]; then
-argoma=$argoss
-else
-argoma=$argotro
+    argoprotocol=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .protocol' /usr/local/x-ui/bin/config.json)
+    echo -e "Estado del túnel fijo de Argo: $blue Iniciado 【Escuchando el puerto $yellow${argoprotocol}-ws$plain$blue del nodo:$plain$yellow$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)$plain$blue】$plain$plain"
+    argotro=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].password' /usr/local/x-ui/bin/config.json)
+    argoss=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.password' /usr/local/x-ui/bin/config.json)
+    argouuid=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .settings.clients[0].id' /usr/local/x-ui/bin/config.json)
+    argopath=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .streamSettings.wsSettings.path' /usr/local/x-ui/bin/config.json)
+    
+    if [[ ! $argouuid = "null" ]]; then
+        argoma=$argouuid
+    elif [[ ! $argoss = "null" ]]; then
+        argoma=$argoss
+    else
+        argoma=$argotro
+    fi
+
+    argotls=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .streamSettings.security' /usr/local/x-ui/bin/config.json)
+    
+    if [[ -n $argouuid ]]; then
+        if [[ "$argotls" = "tls" ]]; then
+            echo -e "Retroalimentación de error: $red El nodo ws creado por el panel tiene TLS activado, lo que no es compatible con Argo. Por favor, desactiva TLS en el nodo correspondiente del panel.$plain"
+        else
+            echo -e "Contraseña/UUID de Argo: $blue$argoma$plain"
+            echo -e "Ruta de Argo: $blue$argopath$plain"
+            echo -e "Nombre de dominio fijo de Argo: $blue$(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)$plain"
+        fi
+    else
+        echo -e "Retroalimentación de error: $red El panel aún no ha creado un nodo ws en el puerto $yellow$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)$plain$red, se recomienda vmess-ws$plain$plain"
+    fi
 fi
-argotls=$(jq -r --arg port "$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)" '.inbounds[] | select(.port == ($port | tonumber)) | .streamSettings.security' /usr/local/x-ui/bin/config.json)
-if [[ -n $argouuid ]]; then
-if [[ "$argotls" = "tls" ]]; then
-echo -e "错误反馈：$red面板创建的ws节点开启了tls，不支持Argo，请在面板对应的节点中关闭tls$plain"
 else
-echo -e "Argo密码/UUID：$blue$argoma$plain"
-echo -e "Argo路径path：$blue$argopath$plain"
-echo -e "Argo固定域名：$blue$(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)$plain"
-fi
-else
-echo -e "错误反馈：$red面板尚未创建一个端口为$yellow$(cat /usr/local/x-ui/xuiargoymport.log 2>/dev/null)$plain$red的ws节点，推荐vmess-ws$plain$plain"
-fi
-fi
-else
-echo -e "Argo状态：$blue未启动$plain"
+echo -e "Estado de Argo: $blue No iniciado $plain"
 fi
 echo "------------------------------------------------------------------------------------"
 show_status
@@ -2333,34 +2335,34 @@ echo "--------------------------------------------------------------------------
 acp=$(/usr/local/x-ui/x-ui setting -show 2>/dev/null)
 if [[ -n $acp ]]; then
 if [[ $acp == *admin*  ]]; then
-red "x-ui出错，请重置用户名或者卸载重装x-ui"
+red "Error en x-ui, por favor restablece el nombre de usuario o desinstala y reinstala x-ui"
 else
 xpath=$(echo $acp | awk '{print $8}')
 xport=$(echo $acp | awk '{print $6}')
 xip1=$(cat /usr/local/x-ui/xip 2>/dev/null | sed -n 1p)
 xip2=$(cat /usr/local/x-ui/xip 2>/dev/null | sed -n 2p)
 if [ "$xpath" == "/" ]; then
-path="$sred【严重安全提示: 请进入面板设置，添加url根路径】$plain"
+    path="$sred【Advertencia de seguridad grave: por favor, ve a la configuración del panel y añade la ruta raíz de URL】$plain"
 fi
-echo -e "x-ui登录信息如下："
+echo -e "La información de inicio de sesión de x-ui es la siguiente:"
 echo -e "$blue$acp$path$plain" 
 if [[ -n $xip2 ]]; then
-xuimb="http://${xip1}:${xport}${xpath} 或者 http://${xip2}:${xport}${xpath}"
+    xuimb="http://${xip1}:${xport}${xpath} o http://${xip2}:${xport}${xpath}"
 else
-xuimb="http://${xip1}:${xport}${xpath}"
+    xuimb="http://${xip1}:${xport}${xpath}"
 fi
-echo -e "$blue默认IP登录地址(非安全)：$xuimb$plain"
+echo -e "$blue Dirección de inicio de sesión IP predeterminada (no segura): $xuimb$plain"
 if [[ -f /root/ygkkkca/ca.log ]]; then
-echo -e "$blue路径域名登录地址(安全)：https://$(cat /root/ygkkkca/ca.log 2>/dev/null):${xport}${xpath}$plain"
+    echo -e "$blue Dirección de inicio de sesión de dominio de ruta (segura): https://$(cat /root/ygkkkca/ca.log 2>/dev/null):${xport}${xpath}$plain"
 fi
 fi
 else
-echo -e "x-ui登录信息如下："
-echo -e "$red未安装x-ui，无显示$plain"
+echo -e "La información de inicio de sesión de x-ui es la siguiente:"
+echo -e "$red No se ha instalado x-ui, no hay información para mostrar $plain"
 fi
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
 echo
-readp "请输入数字:" Input
+readp "Por favor, introduce un número:" Input
 case "$Input" in     
  1 ) check_uninstall && xuiinstall;;
  2 ) check_install && uninstall;;
