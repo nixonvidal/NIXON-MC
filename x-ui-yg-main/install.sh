@@ -158,7 +158,7 @@ serinstall() {
   systemctl start x-ui
   cd
   #curl -sSL -o /usr/bin/x-ui --insecure https://gitlab.com/rwkgyg/x-ui-yg/raw/main/1install.sh >/dev/null 2>&1
-  curl -sSL -o /usr/bin/x-ui --insecure https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/install.sh >/dev/null 2>&1
+  curl -sSL -o /usr/bin/x-ui --insecure https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/x-ui-yg-main/install.sh >/dev/null 2>&1
   chmod +x /usr/bin/x-ui
   if [[ -f /usr/bin/x-ui && -f /usr/local/x-ui/bin/xray-linux-${cpu} ]]; then
     green "Descarga exitosa"
@@ -317,10 +317,10 @@ uninstall() {
     echo
     green "x-ui ha sido desinstalado"
     echo
-    blue "Bienvenido a continuar usando el script x-ui-yg: bash <(curl -Ls https://raw.githubusercontent.com/yonggekkk/x-ui-yg/main/install.sh)"
+    blue "Bienvenido a continuar usando el script x-ui-yg: bash <(curl -Ls https://raw.githubusercontent.com/nixonvidal/NIXON-MC/master/x-ui-yg-main/install.sh)"
     echo
   else
-    red "输入有误" && uninstall
+    red "Entrada incorrecta" && uninstall
   fi
 }
 
@@ -338,7 +338,7 @@ stop() {
     sed -i '/goxui.sh/d' /tmp/crontab.tmp
     crontab /tmp/crontab.tmp
     rm /tmp/crontab.tmp
-    green "x-ui停止成功"
+    green "x-ui detenido con éxito"
   else
     red "x-ui no pudo detenerse, ejecute x-ui log para ver el registro y proporcionar comentarios" && exit
   fi
