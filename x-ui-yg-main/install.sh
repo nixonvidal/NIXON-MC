@@ -1688,7 +1688,7 @@ EOF
         xui_sb_cl
       fi
     else
-      red "当前x-ui未设置有效的节点配置" && exit
+      red "Actualmente, x-ui no ha configurado un nodo válido." && exit
     fi
   done
 
