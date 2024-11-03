@@ -517,8 +517,8 @@ show_xray_status() {
   fi
 }
 
-xuigo() {
-  cat >/usr/local/x-ui/goxui.sh <<-\EOF
+xuigo(){
+cat>/usr/local/x-ui/goxui.sh<<-\EOF
 #!/bin/bash
 xui=`ps -aux |grep "x-ui" |grep -v "grep" |wc -l`
 xray=`ps -aux |grep "xray" |grep -v "grep" |wc -l`
@@ -529,399 +529,398 @@ if [ $xray = 0 ];then
 x-ui restart
 fi
 EOF
-  chmod +x /usr/local/x-ui/goxui.sh
+chmod +x /usr/local/x-ui/goxui.sh
 }
 
-cronxui() {
-  uncronxui
-  crontab -l >/tmp/crontab.tmp
-  echo "* * * * * /usr/local/x-ui/goxui.sh" >>/tmp/crontab.tmp
-  echo "0 2 * * * x-ui restart" >>/tmp/crontab.tmp
-  crontab /tmp/crontab.tmp
-  rm /tmp/crontab.tmp
+cronxui(){
+uncronxui
+crontab -l > /tmp/crontab.tmp
+echo "* * * * * /usr/local/x-ui/goxui.sh" >> /tmp/crontab.tmp
+echo "0 2 * * * x-ui restart" >> /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
 }
 
-uncronxui() {
-  crontab -l >/tmp/crontab.tmp
-  sed -i '/goxui.sh/d' /tmp/crontab.tmp
-  sed -i '/x-ui restart/d' /tmp/crontab.tmp
-  sed -i '/xuiargoport.log/d' /tmp/crontab.tmp
-  sed -i '/xuiargopid.log/d' /tmp/crontab.tmp
-  sed -i '/xuiargoympid/d' /tmp/crontab.tmp
-  crontab /tmp/crontab.tmp
-  rm /tmp/crontab.tmp
+uncronxui(){
+crontab -l > /tmp/crontab.tmp
+sed -i '/goxui.sh/d' /tmp/crontab.tmp
+sed -i '/x-ui restart/d' /tmp/crontab.tmp
+sed -i '/xuiargoport.log/d' /tmp/crontab.tmp
+sed -i '/xuiargopid.log/d' /tmp/crontab.tmp
+sed -i '/xuiargoympid/d' /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
 }
 
-close() {
-  systemctl stop firewalld.service >/dev/null 2>&1
-  systemctl disable firewalld.service >/dev/null 2>&1
-  setenforce 0 >/dev/null 2>&1
-  ufw disable >/dev/null 2>&1
-  iptables -P INPUT ACCEPT >/dev/null 2>&1
-  iptables -P FORWARD ACCEPT >/dev/null 2>&1
-  iptables -P OUTPUT ACCEPT >/dev/null 2>&1
-  iptables -t mangle -F >/dev/null 2>&1
-  iptables -F >/dev/null 2>&1
-  iptables -X >/dev/null 2>&1
-  netfilter-persistent save >/dev/null 2>&1
-  if [[ -n $(apachectl -v 2>/dev/null) ]]; then
-    systemctl stop httpd.service >/dev/null 2>&1
-    systemctl disable httpd.service >/dev/null 2>&1
-    service apache2 stop >/dev/null 2>&1
-    systemctl disable apache2 >/dev/null 2>&1
-  fi
-  sleep 1
-  green "执行开放端口，关闭防火墙完毕"
+close(){
+systemctl stop firewalld.service >/dev/null 2>&1
+systemctl disable firewalld.service >/dev/null 2>&1
+setenforce 0 >/dev/null 2>&1
+ufw disable >/dev/null 2>&1
+iptables -P INPUT ACCEPT >/dev/null 2>&1
+iptables -P FORWARD ACCEPT >/dev/null 2>&1
+iptables -P OUTPUT ACCEPT >/dev/null 2>&1
+iptables -t mangle -F >/dev/null 2>&1
+iptables -F >/dev/null 2>&1
+iptables -X >/dev/null 2>&1
+netfilter-persistent save >/dev/null 2>&1
+if [[ -n $(apachectl -v 2>/dev/null) ]]; then
+systemctl stop httpd.service >/dev/null 2>&1
+systemctl disable httpd.service >/dev/null 2>&1
+service apache2 stop >/dev/null 2>&1
+systemctl disable apache2 >/dev/null 2>&1
+fi
+sleep 1
+green "Ejecute abrir puerto y cierre el firewall."
 }
 
-openyn() {
-  echo
-  readp "是否开放端口，关闭防火墙？\n1、是，执行(回车默认)\n2、否，跳过！自行处理\n请选择：" action
-  if [[ -z $action ]] || [[ $action == "1" ]]; then
-    close
-  elif [[ $action == "2" ]]; then
-    echo
-  else
-    red "输入错误,请重新选择" && openyn
-  fi
+openyn(){
+echo
+readp "¿Quieres abrir el puerto y cerrar el firewall? \n1, Sí, ejecutar (predeterminado presionando Enter)\n2, ¡No, salta! Manéjelo usted mismo\nPor favor seleccione:" action
+if [[ -z $action ]] || [[ $action == "1" ]]; then
+close
+elif [[ $action == "2" ]]; then
+echo
+else
+red "Error de entrada, por favor elige de nuevo" && openyn
+fi
 }
 
-changeserv() {
-  echo
-  readp "1：设置Argo临时、固定隧道\n2：设置vmess与vless节点在订阅链接中的优选IP地址\n3：设置Gitlab订阅分享链接\n0：返回上层\n请选择【0-3】：" menu
-  if [ "$menu" = "1" ]; then
-    xuiargo
-  elif [ "$menu" = "2" ]; then
-    xuicfadd
-  elif [ "$menu" = "3" ]; then
-    gitlabsub
-  else
-    show_menu
-  fi
+
+changeserv(){
+echo
+readp "1: Configurar túneles fijos y temporales de Argo\n2:Establezca las direcciones IP preferidas de los nodos vmess y vless en el enlace de suscripcion\n3: Configurar el enlace para compartir suscripción de Gitlab\n0: Regresar al nivel superior\nPor favor seleccione [0-3]:" menu
+if [ "$menu" = "1" ];then
+xuiargo
+elif [ "$menu" = "2" ];then
+xuicfadd
+elif [ "$menu" = "3" ];then
+gitlabsub
+else 
+show_menu
+fi
 }
 
-cloudflaredargo() {
-  if [ ! -e /usr/local/x-ui/cloudflared ]; then
-    case $(uname -m) in
-    aarch64) cpu=arm64 ;;
-    x86_64) cpu=amd64 ;;
-    #aarch64) cpu=car;;
-    #x86_64) cpu=cam;;
-    esac
-    curl -L -o /usr/local/x-ui/cloudflared -# --retry 2 https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$cpu
-    #curl -L -o /usr/local/x-ui/cloudflared -# --retry 2 https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/$cpu
-    chmod +x /usr/local/x-ui/cloudflared
-  fi
+cloudflaredargo(){
+if [ ! -e /usr/local/x-ui/cloudflared ]; then
+case $(uname -m) in
+aarch64) cpu=arm64;;
+x86_64) cpu=amd64;;
+#aarch64) cpu=car;;
+#x86_64) cpu=cam;;
+esac
+curl -L -o /usr/local/x-ui/cloudflared -# --retry 2 https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$cpu
+#curl -L -o /usr/local/x-ui/cloudflared -# --retry 2 https://gitlab.com/rwkgyg/sing-box-yg/-/raw/main/$cpu
+chmod +x /usr/local/x-ui/cloudflared
+fi
 }
 
-xuiargo() {
-  echo
-  yellow "开启Argo隧道节点的两个前提要求："
-  green "一、节点的传输协议是WS"
-  green "二、节点的TLS必须关闭"
-  green "节点类别可选：vmess-ws、vless-ws、trojan-ws、shadowsocks-ws。推荐vmess-ws"
-  echo
-  yellow "1：设置Argo临时隧道"
-  yellow "2：设置Argo固定隧道"
-  yellow "0：返回上层"
-  readp "请选择【0-2】：" menu
-  if [ "$menu" = "1" ]; then
-    cfargo
-  elif [ "$menu" = "2" ]; then
-    cfargoym
-  else
-    changeserv
-  fi
+xuiargo(){
+echo
+yellow "Hay dos requisitos previos para abrir un nodo de túnel Argo:"
+green "1. El protocolo de transmisión del nodo es WS."
+green "2. El TLS del nodo debe estar desactivado."
+green "Categorías de nodos opcionales: vmess-ws, vless-ws, trojan-ws, shadowsocks-ws. Recomendar vmess-ws"
+echo
+yellow "1: configurar el túnel temporal de Argo"
+yellow "2: Configurar el túnel fijo Argo"
+yellow "0: volver al nivel superior"
+readp "Por favor seleccione【0-2】:" menu
+if [ "$menu" = "1" ]; then
+cfargo
+elif [ "$menu" = "2" ]; then
+cfargoym
+else
+changeserv
+fi
 }
 
-cfargo() {
-  echo
-  yellow "1：重置Argo临时隧道域名"
-  yellow "2：停止Argo临时隧道"
-  yellow "0：返回上层"
-  readp "请选择【0-2】：" menu
-  if [ "$menu" = "1" ]; then
-    readp "请输入Argo监听的WS节点端口：" port
-    echo "$port" >/usr/local/x-ui/xuiargoport.log
-    cloudflaredargo
-    i=0
-    while [ $i -le 4 ]; do
-      let i++
-      yellow "第$i次刷新验证Cloudflared Argo隧道域名有效性，请稍等……"
-      if [[ -n $(ps -e | grep cloudflared) ]]; then
-        kill -15 $(cat /usr/local/x-ui/xuiargopid.log 2>/dev/null) >/dev/null 2>&1
-      fi
-      /usr/local/x-ui/cloudflared tunnel --url http://localhost:$port --edge-ip-version auto --no-autoupdate >/usr/local/x-ui/argo.log 2>&1 &
-      echo "$!" >/usr/local/x-ui/xuiargopid.log
-      sleep 20
-      if [[ -n $(curl -sL https://$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')/ -I | awk 'NR==1 && /404|400|503/') ]]; then
-        argo=$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')
-        blue "Argo隧道申请成功，域名验证有效：$argo" && sleep 2
-        break
-      fi
-      if [ $i -eq 5 ]; then
-        red "请注意"
-        yellow "1：请确保你输入的端口是x-ui已创建WS协议端口"
-        yellow "2：Argo域名验证暂不可用，稍后可能会自动恢复，或者再次重置" && sleep 2
-      fi
-    done
-    crontab -l >/tmp/crontab.tmp
-    sed -i '/xuiargoport.log/d' /tmp/crontab.tmp
-    crontab /tmp/crontab.tmp
-    rm /tmp/crontab.tmp
-    crontab -l >/tmp/crontab.tmp
-    echo '@reboot /bin/bash -c "/usr/local/x-ui/cloudflared tunnel --url http://localhost:$(cat /usr/local/x-ui/xuiargoport.log) --edge-ip-version auto --no-autoupdate > /usr/local/x-ui/argo.log 2>&1 & pid=\$! && echo \$pid > /usr/local/x-ui/xuiargopid.log"' >>/tmp/crontab.tmp
-    crontab /tmp/crontab.tmp
-    rm /tmp/crontab.tmp
-  elif [ "$menu" = "2" ]; then
-    kill -15 $(cat /usr/local/x-ui/xuiargopid.log 2>/dev/null) >/dev/null 2>&1
-    rm -rf /usr/local/x-ui/argo.log /usr/local/x-ui/xuiargopid.log /usr/local/x-ui/xuiargoport.log
-    crontab -l >/tmp/crontab.tmp
-    sed -i '/xuiargopid.log/d' /tmp/crontab.tmp
-    crontab /tmp/crontab.tmp
-    rm /tmp/crontab.tmp
-    green "已卸载Argo临时隧道"
-  else
-    xuiargo
-  fi
+cfargo(){
+echo
+yellow "1: Restablecer el nombre de dominio del túnel temporal de Argo"
+yellow "2: Detener el túnel temporal de Argo"
+yellow "0: volver al nivel superior"
+readp "Por favor seleccione【0-2】：" menu
+if [ "$menu" = "1" ]; then
+readp "Ingrese el puerto del nodo WS en el que escucha Argo:" port
+echo "$port" > /usr/local/x-ui/xuiargoport.log
+cloudflaredargo
+i=0
+while [ $i -le 4 ]; do let i++
+yellow "No. $i Actualizar verificación Cloudflared Argo隧道域名有效性，请稍等……"
+if [[ -n $(ps -e | grep cloudflared) ]]; then
+kill -15 $(cat /usr/local/x-ui/xuiargopid.log 2>/dev/null) >/dev/null 2>&1
+fi
+/usr/local/x-ui/cloudflared tunnel --url http://localhost:$port --edge-ip-version auto --no-autoupdate > /usr/local/x-ui/argo.log 2>&1 &
+echo "$!" > /usr/local/x-ui/xuiargopid.log
+sleep 20
+if [[ -n $(curl -sL https://$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')/ -I | awk 'NR==1 && /404|400|503/') ]]; then
+argo=$(cat /usr/local/x-ui/argo.log 2>/dev/null | grep -a trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}')
+blue "La solicitud del túnel Argo se realizó correctamente y la verificación del nombre de dominio es válida: $argo" && sleep 2
+break
+fi
+if [ $i -eq 5 ]; then
+red "tenga en cuenta"
+yellow "1: asegurese de que el puerto que ingresa sea el puerto del protocolo WS creado por x-ui"
+yellow "2: La verificación del nombre de dominio de Argo no está disponible temporalmente y puede restaurarse automáticamente más tarde o restablecerse nuevamente." && sleep 2
+fi
+done
+crontab -l > /tmp/crontab.tmp
+sed -i '/xuiargoport.log/d' /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+crontab -l > /tmp/crontab.tmp
+echo '@reboot /bin/bash -c "/usr/local/x-ui/cloudflared tunnel --url http://localhost:$(cat /usr/local/x-ui/xuiargoport.log) --edge-ip-version auto --no-autoupdate > /usr/local/x-ui/argo.log 2>&1 & pid=\$! && echo \$pid > /usr/local/x-ui/xuiargopid.log"' >> /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+elif [ "$menu" = "2" ]; then
+kill -15 $(cat /usr/local/x-ui/xuiargopid.log 2>/dev/null) >/dev/null 2>&1
+rm -rf /usr/local/x-ui/argo.log /usr/local/x-ui/xuiargopid.log /usr/local/x-ui/xuiargoport.log
+crontab -l > /tmp/crontab.tmp
+sed -i '/xuiargopid.log/d' /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+green "Desinstalado el túnel temporal de Argo"
+else
+xuiargo
+fi
 }
 
-cfargoym() {
-  echo
-  if [[ -f /usr/local/x-ui/xuiargotoken.log && -f /usr/local/x-ui/xuiargoym.log ]]; then
-    green "当前Argo固定隧道域名：$(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)"
-    green "当前Argo固定隧道Token：$(cat /usr/local/x-ui/xuiargotoken.log 2>/dev/null)"
-  fi
-  echo
-  green "请确保Cloudflare官网 --- Zero Trust --- Networks --- Tunnels已设置完成"
-  yellow "1：重置/设置Argo固定隧道域名"
-  yellow "2：停止Argo固定隧道"
-  yellow "0：返回上层"
-  readp "请选择【0-2】：" menu
-  if [ "$menu" = "1" ]; then
-    readp "请输入Argo监听的WS节点端口：" port
-    echo "$port" >/usr/local/x-ui/xuiargoymport.log
-    cloudflaredargo
-    readp "输入Argo固定隧道Token: " argotoken
-    readp "输入Argo固定隧道域名: " argoym
-    if [[ -n $(ps -e | grep cloudflared) ]]; then
-      kill -15 $(cat /usr/local/x-ui/xuiargoympid.log 2>/dev/null) >/dev/null 2>&1
-    fi
-    echo
-    if [[ -n "${argotoken}" && -n "${argoym}" ]]; then
-      nohup /usr/local/x-ui/cloudflared tunnel --edge-ip-version auto run --token ${argotoken} >/dev/null 2>&1 &
-      echo "$!" >/usr/local/x-ui/xuiargoympid.log
-      sleep 20
-    fi
-    echo ${argoym} >/usr/local/x-ui/xuiargoym.log
-    echo ${argotoken} >/usr/local/x-ui/xuiargotoken.log
-    crontab -l >/tmp/crontab.tmp
-    sed -i '/xuiargoympid/d' /tmp/crontab.tmp
-    echo '@reboot /bin/bash -c "nohup /usr/local/x-ui/cloudflared tunnel --edge-ip-version auto run --token $(cat /usr/local/x-ui/xuiargotoken.log 2>/dev/null) >/dev/null 2>&1 & pid=\$! && echo \$pid > /usr/local/x-ui/xuiargoympid.log"' >>/tmp/crontab.tmp
-    crontab /tmp/crontab.tmp
-    rm /tmp/crontab.tmp
-    argo=$(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)
-    blue "Argo固定隧道设置完成，固定域名：$argo"
-  elif [ "$menu" = "2" ]; then
-    kill -15 $(cat /usr/local/x-ui/xuiargoympid.log 2>/dev/null) >/dev/null 2>&1
-    rm -rf /usr/local/x-ui/xuiargoym.log /usr/local/x-ui/xuiargoymport.log /usr/local/x-ui/xuiargoympid.log /usr/local/x-ui/xuiargotoken.log
-    crontab -l >/tmp/crontab.tmp
-    sed -i '/xuiargoympid/d' /tmp/crontab.tmp
-    crontab /tmp/crontab.tmp
-    rm /tmp/crontab.tmp
-    green "已卸载Argo固定隧道"
-  else
-    xuiargo
-  fi
+cfargoym(){
+echo
+if [[ -f /usr/local/x-ui/xuiargotoken.log && -f /usr/local/x-ui/xuiargoym.log ]]; then
+green "Nombre de dominio actual del túnel fijo de Argo: $(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)"
+green "Token de túnel fijo Argo actual: $(cat /usr/local/x-ui/xuiargotoken.log 2>/dev/null)"
+fi
+echo
+green "Asegúrese de que el sitio web oficial de Cloudflare --- Zero Trust --- Redes --- Túneles estén configurados"
+yellow "1: Restablecer/establecer el nombre de dominio del túnel fijo Argo"
+yellow "2: Detener el túnel fijo Argo"
+yellow "0: volver al nivel superior"
+readp "Por favor seleccione【0-2】：" menu
+if [ "$menu" = "1" ]; then
+readp "Ingrese el puerto del nodo WS en el que escucha Argo: " port
+echo "$port" > /usr/local/x-ui/xuiargoymport.log
+cloudflaredargo
+readp "Ingrese el Token del túnel fijo de Argo: " argotoken
+readp "Ingrese el nombre de dominio del túnel fijo de Argo: " argoym
+if [[ -n $(ps -e | grep cloudflared) ]]; then
+kill -15 $(cat /usr/local/x-ui/xuiargoympid.log 2>/dev/null) >/dev/null 2>&1
+fi
+echo
+if [[ -n "${argotoken}" && -n "${argoym}" ]]; then
+nohup /usr/local/x-ui/cloudflared tunnel --edge-ip-version auto run --token ${argotoken} >/dev/null 2>&1 & echo "$!" > /usr/local/x-ui/xuiargoympid.log
+sleep 20
+fi
+echo ${argoym} > /usr/local/x-ui/xuiargoym.log
+echo ${argotoken} > /usr/local/x-ui/xuiargotoken.log
+crontab -l > /tmp/crontab.tmp
+sed -i '/xuiargoympid/d' /tmp/crontab.tmp
+echo '@reboot /bin/bash -c "nohup /usr/local/x-ui/cloudflared tunnel --edge-ip-version auto run --token $(cat /usr/local/x-ui/xuiargotoken.log 2>/dev/null) >/dev/null 2>&1 & pid=\$! && echo \$pid > /usr/local/x-ui/xuiargoympid.log"' >> /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+argo=$(cat /usr/local/x-ui/xuiargoym.log 2>/dev/null)
+blue "Se completa la configuración del túnel fijo de Argo y se fija el nombre de dominio: $argo"
+elif [ "$menu" = "2" ]; then
+kill -15 $(cat /usr/local/x-ui/xuiargoympid.log 2>/dev/null) >/dev/null 2>&1
+rm -rf /usr/local/x-ui/xuiargoym.log /usr/local/x-ui/xuiargoymport.log /usr/local/x-ui/xuiargoympid.log /usr/local/x-ui/xuiargotoken.log
+crontab -l > /tmp/crontab.tmp
+sed -i '/xuiargoympid/d' /tmp/crontab.tmp
+crontab /tmp/crontab.tmp
+rm /tmp/crontab.tmp
+green "Túnel fijo Argo desinstalado"
+else
+xuiargo
+fi
 }
 
-xuicfadd() {
-  [[ -s /usr/local/x-ui/bin/xuicdnip_ws.txt ]] && cdnwsname=$(cat /usr/local/x-ui/bin/xuicdnip_ws.txt 2>/dev/null) || cdnwsname='域名或IP直连'
-  [[ -s /usr/local/x-ui/bin/xuicdnip_argo.txt ]] && cdnargoname=$(cat /usr/local/x-ui/bin/xuicdnip_argo.txt 2>/dev/null) || cdnargoname=www.visa.com.sg
-  echo
-  green "推荐使用稳定的世界大厂或组织的CDN网站作为客户端优选IP地址："
-  blue "www.visa.com.sg"
-  blue "www.wto.org"
-  blue "www.web.com"
-  echo
-  yellow "1：设置所有主节点vmess/vless订阅节点客户端优选IP地址 【当前正使用：$cdnwsname】"
-  yellow "2：设置Argo节点vmess/vless订阅节点客户端优选IP地址 【当前正使用：$cdnargoname】"
-  yellow "0：返回上层"
-  readp "请选择【0-2】：" menu
-  if [ "$menu" = "1" ]; then
-    red "请确保本地IP已解析到CF托管的域名上，节点端口已设置为13个CF标准端口："
-    red "关tls端口：2052、2082、2086、2095、80、8880、8080"
-    red "开tls端口：2053、2083、2087、2096、8443、443"
-    red "如果VPS不支持以上13个CF标准端口（NAT类VPS），请在CF规则页面---Origin Rules页面下设置好回源规则" && sleep 2
-    echo
-    readp "输入自定义的优选IP/域名 (回车跳过表示恢复本地IP直连)：" menu
-    [[ -z "$menu" ]] && >/usr/local/x-ui/bin/xuicdnip_ws.txt || echo "$menu" >/usr/local/x-ui/bin/xuicdnip_ws.txt
-    green "设置成功，可选择7刷新" && sleep 2 && show_menu
-  elif [ "$menu" = "2" ]; then
-    red "请确保Argo临时隧道或者固定隧道的节点功能已启用" && sleep 2
-    readp "输入自定义的优选IP/域名 (回车跳过表示用默认优选域名：www.visa.com.sg)：" menu
-    [[ -z "$menu" ]] && >/usr/local/x-ui/bin/xuicdnip_argo.txt || echo "$menu" >/usr/local/x-ui/bin/xuicdnip_argo.txt
-    green "设置成功，可选择7刷新" && sleep 2 && show_menu
-  else
-    changeserv
-  fi
+xuicfadd(){
+[[ -s /usr/local/x-ui/bin/xuicdnip_ws.txt ]] && cdnwsname=$(cat /usr/local/x-ui/bin/xuicdnip_ws.txt 2>/dev/null)  || cdnwsname='域名或IP直连'
+[[ -s /usr/local/x-ui/bin/xuicdnip_argo.txt ]] && cdnargoname=$(cat /usr/local/x-ui/bin/xuicdnip_argo.txt 2>/dev/null)  || cdnargoname=www.visa.com.sg
+echo
+green "Se recomienda utilizar el sitio web CDN estable de un importante fabricante u organización mundial como dirección IP preferida del cliente:"
+blue "www.visa.com.sg"
+blue "www.wto.org"
+blue "www.web.com"
+echo
+yellow "1: Establezca la dirección IP preferida de todos los clientes del nodo de suscripción vmess/vless del nodo maestro [Actualmente en uso:$cdnwsname】"
+yellow "2: Establezca la dirección IP preferida del cliente del nodo de suscripción vmess/vless del nodo Argo 【Actualmente usando: $cdnargoname】"
+yellow "0: volver al nivel superior"
+readp "Por favor seleccione【0-2】：" menu
+if [ "$menu" = "1" ]; then
+red "Asegúrese de que la IP local se haya resuelto con el nombre de dominio alojado en CF y que el puerto del nodo se haya configurado en 13 puertos estándar de CF:"
+red "Fuera del puerto tls: 2052, 2082, 2086, 2095, 80, 8880, 8080"
+red "Abrir puertos tls: 2053, 2083, 2087, 2096, 8443, 443"
+red "Si el VPS no admite los 13 puertos estándar CF anteriores (NAT VPS), establezca las reglas de regreso al origen en la página de reglas CF---Página Reglas de origen" && sleep 2
+echo
+readp "Ingrese la IP/nombre de dominio personalizado preferido (presione Enter para omitir y restaurar la conexión IP directa local):" menu
+[[ -z "$menu" ]] && > /usr/local/x-ui/bin/xuicdnip_ws.txt || echo "$menu" > /usr/local/x-ui/bin/xuicdnip_ws.txt
+green "Configuración exitosa, puede elegir 7 para actualizar" && sleep 2 && show_menu
+elif [ "$menu" = "2" ]; then
+red "Asegúrese de que la función de nodo del túnel temporal o del túnel fijo de Argo esté habilitada" && sleep 2
+readp "Ingrese la IP/nombre de dominio personalizado preferido (presione Enter para omitir y usar el nombre de dominio preferido predeterminado):：www.visa.com.sg)：" menu
+[[ -z "$menu" ]] && > /usr/local/x-ui/bin/xuicdnip_argo.txt || echo "$menu" > /usr/local/x-ui/bin/xuicdnip_argo.txt
+green "Configuración exitosa, puede elegir 7 para actualizar" && sleep 2 && show_menu
+else
+changeserv
+fi
 }
 
-gitlabsub() {
-  echo
-  green "请确保Gitlab官网上已建立项目，已开启推送功能，已获取访问令牌"
-  yellow "1：重置/设置Gitlab订阅链接"
-  yellow "0：返回上层"
-  readp "请选择【0-1】：" menu
-  if [ "$menu" = "1" ]; then
-    chown -R root:root /usr/local/x-ui/bin /usr/local/x-ui
-    cd /usr/local/x-ui/bin
-    readp "输入登录邮箱: " email
-    readp "输入访问令牌: " token
-    readp "输入用户名: " userid
-    readp "输入项目名: " project
-    echo
-    green "多台VPS可共用一个令牌及项目名，可创建多个分支订阅链接"
-    green "回车跳过表示不新建，仅使用主分支main订阅链接(首台VPS建议回车跳过)"
-    readp "新建分支名称(可随意填写): " gitlabml
-    echo
-    sharesub_sbcl >/dev/null 2>&1
-    if [[ -z "$gitlabml" ]]; then
-      gitlab_ml=''
-      git_sk=main
-      rm -rf /usr/local/x-ui/bin/gitlab_ml_ml
-    else
-      gitlab_ml=":${gitlabml}"
-      git_sk="${gitlabml}"
-      echo "${gitlab_ml}" >/usr/local/x-ui/bin/gitlab_ml_ml
-    fi
-    echo "$token" >/usr/local/x-ui/bin/gitlabtoken.txt
-    rm -rf /usr/local/x-ui/bin/.git
-    git init >/dev/null 2>&1
-    git add xui_singbox.json xui_clashmeta.yaml xui_ty.txt >/dev/null 2>&1
-    git config --global user.email "${email}" >/dev/null 2>&1
-    git config --global user.name "${userid}" >/dev/null 2>&1
-    git commit -m "commit_add_$(date +"%F %T")" >/dev/null 2>&1
-    branches=$(git branch)
-    if [[ $branches == *master* ]]; then
-      git branch -m master main >/dev/null 2>&1
-    fi
-    git remote add origin https://${token}@gitlab.com/${userid}/${project}.git >/dev/null 2>&1
-    if [[ $(ls -a | grep '^\.git$') ]]; then
-      cat >/usr/local/x-ui/bin/gitpush.sh <<EOF
+gitlabsub(){
+echo
+green "Asegúrese de que el proyecto se haya establecido en el sitio web oficial de Gitlab, que la función push esté habilitada y que se haya obtenido el token de acceso."
+yellow "1: restablecer/configurar el enlace de suscripción de Gitlab"
+yellow "0: volver al nivel superior"
+readp "Por favor seleccione【0-1】：" menu
+if [ "$menu" = "1" ]; then
+chown -R root:root /usr/local/x-ui/bin /usr/local/x-ui
+cd /usr/local/x-ui/bin
+readp "Ingrese el correo electrónico de inicio de sesión: " email
+readp "Ingrese el token de acceso: " token
+readp "Introduzca nombre de usuario: " userid
+readp "Introduzca el nombre del proyecto: " project
+echo
+green "Varios VPS pueden compartir un token y un nombre de proyecto, y se pueden crear múltiples enlaces de suscripción a sucursales."
+green "Ingresar para omitir significa que no se crean nuevas creaciones, solo use el enlace de suscripción principal de la sucursal principal (se recomienda presionar Intro para omitir para el primer VPS)"
+readp "Crea un nuevo nombre de sucursal (puedes completarlo como quieras): " gitlabml
+echo
+sharesub_sbcl >/dev/null 2>&1
+if [[ -z "$gitlabml" ]]; then
+gitlab_ml=''
+git_sk=main
+rm -rf /usr/local/x-ui/bin/gitlab_ml_ml
+else
+gitlab_ml=":${gitlabml}"
+git_sk="${gitlabml}"
+echo "${gitlab_ml}" > /usr/local/x-ui/bin/gitlab_ml_ml
+fi
+echo "$token" > /usr/local/x-ui/bin/gitlabtoken.txt
+rm -rf /usr/local/x-ui/bin/.git
+git init >/dev/null 2>&1
+git add xui_singbox.json xui_clashmeta.yaml xui_ty.txt>/dev/null 2>&1
+git config --global user.email "${email}" >/dev/null 2>&1
+git config --global user.name "${userid}" >/dev/null 2>&1
+git commit -m "commit_add_$(date +"%F %T")" >/dev/null 2>&1
+branches=$(git branch)
+if [[ $branches == *master* ]]; then
+git branch -m master main >/dev/null 2>&1
+fi
+git remote add origin https://${token}@gitlab.com/${userid}/${project}.git >/dev/null 2>&1
+if [[ $(ls -a | grep '^\.git$') ]]; then
+cat > /usr/local/x-ui/bin/gitpush.sh <<EOF
 #!/usr/bin/expect
 spawn bash -c "git push -f origin main${gitlab_ml}"
 expect "Password for 'https://$(cat /usr/local/x-ui/bin/gitlabtoken.txt 2>/dev/null)@gitlab.com':"
 send "$(cat /usr/local/x-ui/bin/gitlabtoken.txt 2>/dev/null)\r"
 interact
 EOF
-      chmod +x gitpush.sh
-      ./gitpush.sh "git push -f origin main${gitlab_ml}" cat /usr/local/x-ui/bin/gitlabtoken.txt >/dev/null 2>&1
-      echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_singbox.json/raw?ref=${git_sk}&private_token=${token}" >/usr/local/x-ui/bin/sing_box_gitlab.txt
-      echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_clashmeta.yaml/raw?ref=${git_sk}&private_token=${token}" >/usr/local/x-ui/bin/clash_meta_gitlab.txt
-      echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_ty.txt/raw?ref=${git_sk}&private_token=${token}" >/usr/local/x-ui/bin/xui_ty_gitlab.txt
-      sharesubshow
-    else
-      yellow "设置Gitlab订阅链接失败，请反馈"
-    fi
-    cd
-  else
-    changeserv
-  fi
+chmod +x gitpush.sh
+./gitpush.sh "git push -f origin main${gitlab_ml}" cat /usr/local/x-ui/bin/gitlabtoken.txt >/dev/null 2>&1
+echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_singbox.json/raw?ref=${git_sk}&private_token=${token}" > /usr/local/x-ui/bin/sing_box_gitlab.txt
+echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_clashmeta.yaml/raw?ref=${git_sk}&private_token=${token}" > /usr/local/x-ui/bin/clash_meta_gitlab.txt
+echo "https://gitlab.com/api/v4/projects/${userid}%2F${project}/repository/files/xui_ty.txt/raw?ref=${git_sk}&private_token=${token}" > /usr/local/x-ui/bin/xui_ty_gitlab.txt
+sharesubshow
+else
+yellow "No se pudo configurar el enlace de suscripción de Gitlab. Envíe sus comentarios."
+fi
+cd
+else
+changeserv
+fi
 }
 
-sharesubshow() {
-  green "当前X-ui-Sing-box节点已更新并推送"
-  green "Sing-box订阅链接如下："
-  blue "$(cat /usr/local/x-ui/bin/sing_box_gitlab.txt 2>/dev/null)"
-  echo
-  green "Sing-box订阅链接二维码如下："
-  qrencode -o - -t ANSIUTF8 "$(cat /usr/local/x-ui/bin/sing_box_gitlab.txt 2>/dev/null)"
-  sleep 3
-  echo
-  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo
-  green "当前X-ui-Clash-meta节点配置已更新并推送"
-  green "Clash-meta订阅链接如下："
-  blue "$(cat /usr/local/x-ui/bin/clash_meta_gitlab.txt 2>/dev/null)"
-  echo
-  green "Clash-meta订阅链接二维码如下："
-  qrencode -o - -t ANSIUTF8 "$(cat /usr/local/x-ui/bin/clash_meta_gitlab.txt 2>/dev/null)"
-  sleep 3
-  echo
-  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo
-  green "当前X-ui聚合通用节点配置已更新并推送"
-  green "聚合通用节点订阅链接如下："
-  blue "$(cat /usr/local/x-ui/bin/xui_ty_gitlab.txt 2>/dev/null)"
-  sleep 3
-  echo
-  yellow "可以在网页上输入以上三个订阅链接查看配置内容，如果无配置内容，请自检Gitlab相关设置并重置"
-  echo
+sharesubshow(){
+green "El nodo actual X-ui-Sing-box ha sido actualizado y enviado"
+green "El enlace de suscripción a Sing-box es el siguiente:"
+blue "$(cat /usr/local/x-ui/bin/sing_box_gitlab.txt 2>/dev/null)"
+echo
+green "El código QR del enlace de suscripción a Sing-box es el siguiente:"
+qrencode -o - -t ANSIUTF8 "$(cat /usr/local/x-ui/bin/sing_box_gitlab.txt 2>/dev/null)"
+sleep 3
+echo
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo
+green "La configuración actual del metanodo X-ui-Clash ha sido actualizada y enviada"
+green "El enlace de suscripción a Clash-meta es el siguiente:"
+blue "$(cat /usr/local/x-ui/bin/clash_meta_gitlab.txt 2>/dev/null)"
+echo
+green "El código QR del enlace de suscripción de Clash-meta es el siguiente:"
+qrencode -o - -t ANSIUTF8 "$(cat /usr/local/x-ui/bin/clash_meta_gitlab.txt 2>/dev/null)"
+sleep 3
+echo
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo
+green "La configuración actual del nodo común de agregación X-ui ha sido actualizada y enviada"
+green "El enlace de suscripción del nodo general de agregación es el siguiente:"
+blue "$(cat /usr/local/x-ui/bin/xui_ty_gitlab.txt 2>/dev/null)"
+sleep 3
+echo
+yellow "Puede ingresar los tres enlaces de suscripción anteriores en la página web para ver el contenido de la configuración. Si no hay contenido de configuración, verifique usted mismo las configuraciones relevantes de Gitlab y restablezcalas."
+echo
 }
 
-sharesub() {
-  sharesub_sbcl
-  echo
-  red "Gitlab订阅链接如下："
-  echo
-  cd /usr/local/x-ui/bin
-  if [[ $(ls -a | grep '^\.git$') ]]; then
-    if [ -f /usr/local/x-ui/bin/gitlab_ml_ml ]; then
-      gitlab_ml=$(cat /usr/local/x-ui/bin/gitlab_ml_ml)
-    fi
-    git rm --cached xui_singbox.json xui_clashmeta.yaml xui_ty.txt >/dev/null 2>&1
-    git commit -m "commit_rm_$(date +"%F %T")" >/dev/null 2>&1
-    git add xui_singbox.json xui_clashmeta.yaml xui_ty.txt >/dev/null 2>&1
-    git commit -m "commit_add_$(date +"%F %T")" >/dev/null 2>&1
-    chmod +x gitpush.sh
-    ./gitpush.sh "git push -f origin main${gitlab_ml}" cat /usr/local/x-ui/bin/gitlabtoken.txt >/dev/null 2>&1
-    sharesubshow
-  else
-    yellow "未设置Gitlab订阅链接"
-  fi
-  cd
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  red "🚀X-UI聚合通用节点分享链接显示如下："
-  red "文件目录 /usr/local/x-ui/bin/xui_ty.txt ，可直接在客户端剪切板导入添加" && sleep 2
-  echo
-  cat /usr/local/x-ui/bin/xui_ty.txt
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  red "🚀X-UI-Clash-Meta配置文件操作如下："
-  red "文件目录 /usr/local/x-ui/bin/xui_clashmeta.yaml ，复制自建以yaml文件格式为准"
-  echo
-  red "输入：cat /usr/local/x-ui/bin/xui_clashmeta.yaml 即可显示配置内容" && sleep 2
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  red "🚀XUI-Sing-box-SFA/SFI/SFW配置文件操作如下："
-  red "文件目录 /usr/local/x-ui/bin/xui_singbox.json ，复制自建以json文件格式为准"
-  echo
-  red "输入：cat /usr/local/x-ui/bin/xui_singbox.json 即可显示配置内容" && sleep 2
-  echo
-  white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo
+sharesub(){
+sharesub_sbcl
+echo
+red "El enlace de suscripción de Gitlab es el siguiente:"
+echo
+cd /usr/local/x-ui/bin
+if [[ $(ls -a | grep '^\.git$') ]]; then
+if [ -f /usr/local/x-ui/bin/gitlab_ml_ml ]; then
+gitlab_ml=$(cat /usr/local/x-ui/bin/gitlab_ml_ml)
+fi
+git rm --cached xui_singbox.json xui_clashmeta.yaml xui_ty.txt >/dev/null 2>&1
+git commit -m "commit_rm_$(date +"%F %T")" >/dev/null 2>&1
+git add xui_singbox.json xui_clashmeta.yaml xui_ty.txt >/dev/null 2>&1
+git commit -m "commit_add_$(date +"%F %T")" >/dev/null 2>&1
+chmod +x gitpush.sh
+./gitpush.sh "git push -f origin main${gitlab_ml}" cat /usr/local/x-ui/bin/gitlabtoken.txt >/dev/null 2>&1
+sharesubshow
+else
+yellow "El enlace de suscripción de Gitlab no está configurado"
+fi
+cd
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red "🚀El enlace para compartir el nodo general de agregación X-UI se muestra a continuación:"
+red "Directorio de archivos /usr/local/x-ui/bin/xui_ty.txt, que se puede importar y agregar directamente al portapapeles del cliente && sleep 2
+echo
+cat /usr/local/x-ui/bin/xui_ty.txt
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red "🚀El archivo de configuración X-UI-Clash-Meta funciona de la siguiente manera:"
+red "directorio de archivos /usr/local/x-ui/bin/xui_clashmeta.yaml , copie y cree de acuerdo con el formato de archivo yaml." 
+echo
+red "ingresar: cat /usr/local/x-ui/bin/xui_clashmeta.yaml Se mostrará el contenido de la configuración." && sleep 2
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+red "🚀El funcionamiento del archivo de configuración XUI-Sing-box-SFA/SFI/SFW es el siguiente:"
+red "directorio de archivos /usr/local/x-ui/bin/xui_singbox.json , copiar y compilar en formato de archivo json."
+echo
+red "ingresar: cat /usr/local/x-ui/bin/xui_singbox.json Se mostrará el contenido de la configuración." && sleep 2
+echo
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo
 }
 
-sharesub_sbcl() {
-  if [[ -s /usr/local/x-ui/bin/xuicdnip_argo.txt ]]; then
-    cdnargo=$(cat /usr/local/x-ui/bin/xuicdnip_argo.txt 2>/dev/null)
-  else
-    cdnargo=www.visa.com.sg
-  fi
-  green "请稍等……"
-  xip1=$(cat /usr/local/x-ui/xip 2>/dev/null | sed -n 1p)
-  if [[ "$xip1" =~ : ]]; then
-    dnsip='tls://[2001:4860:4860::8888]/dns-query'
-  else
-    dnsip='tls://8.8.8.8/dns-query'
-  fi
-  cat >/usr/local/x-ui/bin/xui_singbox.json <<EOF
+sharesub_sbcl(){
+if [[ -s /usr/local/x-ui/bin/xuicdnip_argo.txt ]]; then
+cdnargo=$(cat /usr/local/x-ui/bin/xuicdnip_argo.txt 2>/dev/null)
+else
+cdnargo=www.visa.com.sg
+fi
+green "Espere por favor..."
+xip1=$(cat /usr/local/x-ui/xip 2>/dev/null | sed -n 1p)
+if [[ "$xip1" =~ : ]]; then
+dnsip='tls://[2001:4860:4860::8888]/dns-query'
+else
+dnsip='tls://8.8.8.8/dns-query'
+fi
+cat > /usr/local/x-ui/bin/xui_singbox.json <<EOF
 {
   "log": {
     "disabled": false,
@@ -1126,7 +1125,7 @@ sharesub_sbcl() {
 }
 EOF
 
-  cat >/usr/local/x-ui/bin/xui_clashmeta.yaml <<EOF
+cat > /usr/local/x-ui/bin/xui_clashmeta.yaml <<EOF
 port: 7890
 allow-lan: true
 mode: rule
@@ -1159,7 +1158,7 @@ proxies:
 #_0
 
 proxy-groups:
-- name: 负载均衡
+- name: equilibrio de carga
   type: load-balance
   url: https://www.gstatic.com/generate_204
   interval: 300
@@ -1169,7 +1168,7 @@ proxy-groups:
 #_1
 
 
-- name: 自动选择
+- name: selección automática
   type: url-test
   url: https://www.gstatic.com/generate_204
   interval: 300
@@ -1178,11 +1177,11 @@ proxy-groups:
 
 #_2                         
     
-- name: 🌍选择代理节点
+- name: 🌍Elija el nodo del agente
   type: select
   proxies:
-    - 负载均衡                                         
-    - 自动选择
+    - equilibrio de carga                                         
+    - selección automática
     - DIRECT
 
 #_3
